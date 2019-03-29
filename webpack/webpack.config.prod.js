@@ -12,7 +12,7 @@ const config = {
   },
   mode: 'production',
   output: {
-    path: path.resolve(process.cwd(), 'dist'), //  destination
+    path: path.resolve(process.cwd(), 'dist'), // destination
     filename: 'clientBundle.js',
     publicPath: '/dist/',
   },
@@ -22,7 +22,7 @@ const config = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/, //check for all js files
+        test: /\.(js|jsx)$/, // check for all js files
         exclude: /(node_modules)/,
         loader: 'babel-loader',
         options: {

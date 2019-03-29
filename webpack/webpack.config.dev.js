@@ -2,17 +2,17 @@ import webpack from 'webpack';
 import path from 'path';
 
 const config = {
-  context: path.resolve(process.cwd(), 'client'), // Sets context for Webpack as 'IS4302-Charity/client'
+  context: path.resolve(process.cwd(), 'client'), // Sets context for Webpack as 'IS4100'
   entry: { // Source files for Webpack to bundle
     app: [
       'webpack-hot-middleware/client', // Bundles the client for hot reloading
-      './main.js',  // Sets entry point of app as 'IS4302-Charity/client/app'
+      './main.js',  // Sets entry point of app as 'IS4100/client/app'
     ]
   },
   mode: 'development',
   output: {
-    path: path.resolve(process.cwd(), 'dist'), // Creates bundled files in 'IS4302-Charity/dist'
-    filename: 'clientBundle.js', // The bundled script that 'IS4302-Charity/public/index.html' loads
+    path: path.resolve(process.cwd(), 'dist'), // Creates bundled files in 'IS4100/dist'
+    filename: 'clientBundle.js', // The bundled script that 'IS4100/public/index.html' loads
     publicPath: '/dist/'
   },
   plugins: [
