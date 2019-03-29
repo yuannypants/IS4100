@@ -6,7 +6,6 @@ export function httpPOST(url, data) {
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      //'Authorization': 'Bearer' + ' ' + TOKEN
     }
   });
 }
@@ -17,7 +16,6 @@ export function httpGET(url) {
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      //'Authorization': 'Bearer' + ' ' + TOKEN
     }
   });
 }
@@ -28,7 +26,6 @@ export function httpUPDATE(url, data) {
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      //'Authorization': 'Bearer' + ' ' + TOKEN
     }
   });
 }

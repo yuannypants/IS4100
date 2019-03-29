@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { Button } from 'primereact/button';
 import { Password } from 'primereact/password'
 import React, {Component} from 'react';
@@ -29,19 +28,13 @@ export default class Login extends Component {
 
     httpPOST('http://localhost:3000/api/public/login', data)
     .then(response => {
-      localStorage.setItem('username', response.data.username);
-      localStorage.setItem('participant', response.data.participant);
+      localStorage.setItem('username', this.state.username);
       localStorage.setItem('nickname', response.data.nickname);
-      window.location.href = '/Donor'; // Redirects to main page
+      window.location.href = '/Home'; // Redirects to main page
     })
     .catch(error => {
-      let errorMsg;
-      if (error.response.data.errorSource === 'firebase' && error.response.data.errorType === 'wronguserpw')
-        errorMsg = 'You have entered an invalid username and password combination.';
-      else
-        errorMsg = 'An error was encountered. Source: ' + error.response.data.errorSource;
+      let errorMsg = 'An error was encountered.';
       this.setState({error: errorMsg})
-      // console.log(JSON.stringify(error.response.data,null,2));
     });
   }
 

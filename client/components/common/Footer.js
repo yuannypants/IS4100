@@ -4,7 +4,7 @@ export class Footer extends Component {
   render() {
     return  (
       <div className="layout-footer">
-        <span className="footer-text" style={{'marginRight': '5px'}}>Charity Blockchain - Developed with 💖by IS4302 Group 1</span>
+        <span className="footer-text" style={{'marginRight': '5px'}}>IS4100 Project - Developed with 💖by IS4100 Group 8</span>
       </div>
     );
   }

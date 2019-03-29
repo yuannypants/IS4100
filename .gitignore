@@ -1,9 +1,5 @@
 /node_modules
-/fabric
 /.idea
-*.bna
-*.card
 
 .DS_Store
-DevServer_connection.json
 package-lock.json

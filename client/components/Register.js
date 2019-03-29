@@ -10,9 +10,7 @@ export default class Register extends Component {
     super(props);
 
     this.state = {
-      nric: '',
-      firstName: '',
-      lastName: '',
+      username: '',
       password: '',
       error: null
     }
@@ -22,9 +20,7 @@ export default class Register extends Component {
 
   onClickSubmit() {
     let data = {
-      nric: this.state.nric,
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
+      username: this.state.username,
       password: this.state.password
     }
 
@@ -34,9 +30,8 @@ export default class Register extends Component {
       window.location.href = '/login'; // Redirects to main page
     })
     .catch(error => {
-      let errorMsg = 'An error was encountered. Source: ' + error.response.data.errorSource
+      let errorMsg = 'An error was encountered.';
       this.setState({error: errorMsg})
-      console.log(JSON.stringify(error.response.data,null,2));
     });
   }
 
@@ -53,20 +48,8 @@ export default class Register extends Component {
             <div className="p-grid p-justify-center">
               <div className="p-col-10" style={{marginTop:'8px'}}>
                 <span className="p-float-label">
-                  <InputText id="nricInput" value={this.state.nric} onChange={e => this.setState({nric: e.target.value})} />
-                  <label htmlFor="nricInput">NRIC</label>
-                </span>
-              </div>
-              <div className="p-col-10" style={{marginTop:'8px'}}>
-                <span className="p-float-label">
-                  <InputText id="firstNameInput" value={this.state.firstName} onChange={e => this.setState({firstName: e.target.value})} />
-                  <label htmlFor="firstNameInput">First Name</label>
-                </span>
-              </div>
-              <div className="p-col-10" style={{marginTop:'8px'}}>
-                <span className="p-float-label">
-                  <InputText id="lastNameInput" value={this.state.lastName} onChange={e => this.setState({lastName: e.target.value})} />
-                  <label htmlFor="lastNameInput">Last Name</label>
+                  <InputText id="usernameInput" value={this.state.username} onChange={e => this.setState({username: e.target.value})} />
+                  <label htmlFor="usernameInput">Username</label>
                 </span>
               </div>
               <div className="p-col-10" style={{marginTop:'15px'}}>

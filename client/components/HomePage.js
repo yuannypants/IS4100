@@ -22,7 +22,7 @@ export default class HomePage extends Component {
         <img src={background} style={{height: '100%', width: '100%', resizeMode: 'cover', opacity: '0.5', left: 0, top: 0, position: 'absolute', zIndex: -1}} />
         <div className="p-col-12">
           <div className="card card-w-title">
-            <h1 style={{textAlign: 'center'}}>Welcome to IS4302 Charity with Blockchain</h1>
+            <h1 style={{textAlign: 'center'}}>Welcome to IS4100</h1>
             <div className="p-grid">
               <div className="p-col-2 p-offset-4">
                 <Button label="Click here to Register" icon="pi pi-user" onClick={() => document.location="/Register"}/>

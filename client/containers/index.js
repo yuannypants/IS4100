@@ -64,62 +64,19 @@ class RootContainer extends Component {
     this.menu = [];
 
     this.menu.push({
-      label: 'Participants', icon: 'pi pi-fw pi-users',
+      label: 'Homepage', icon: 'pi pi-fw pi-users',
       items: [
-        {label: 'Donors', icon: 'pi pi-fw pi-bars',
-          command: () => { window.location = "Donor"} },
-        {label: 'Charitable Organisations', icon: 'pi pi-fw pi-bars',
-          command: () => { window.location = "CharitableOrganisation"} },
-        {label: 'Beneficiaries', icon: 'pi pi-fw pi-bars',
-          command: () => { window.location = "Beneficiary"} },
-        {label: 'Suppliers', icon: 'pi pi-fw pi-bars',
-          command: () => { window.location = "Supplier"} },
-        {label: 'Validators', icon: 'pi pi-fw pi-bars',
-          command: () => { window.location = "Validator"} },
-      ]
-    });
+        {label: 'Home', icon: 'pi pi-fw pi-bars',
+          command: () => { window.location = "Home"} },
+        {label: 'Page', icon: 'pi pi-fw pi-bars',
+          command: () => { window.location = "Page"} },
 
-    let assetMenu = [];
-
-    if (localStorage.getItem("participant") === "Donor") {
-      assetMenu.push({label: 'Wallets', icon: 'pi pi-fw pi-bars',command: () => { window.location = "Wallet"}})
-      assetMenu.push({label: 'Donation Drives', icon: 'pi pi-fw pi-bars',command: () => { window.location = "DonationDrive"}})
-      assetMenu.push({label: 'Fund Transfer Requests', icon: 'pi pi-fw pi-bars',command: () => { window.location = "FundTransferRequest"} })
-    }
-
-    localStorage.getItem("participant") === "Donor" && assetMenu.push({label: 'Expenditure Reports', icon: 'pi pi-fw pi-bars',command: () => { window.location = "ExpenditureReport"}})
-    localStorage.getItem("participant") === "Donor" && assetMenu.push({label: 'Receipts', icon: 'pi pi-fw pi-bars',command: () => { window.location = "Receipt"}})
-
-    this.menu.push({
-      label: 'Assets', icon: 'pi pi-fw pi-dollar',
-      items: assetMenu
-    });
-
-
-    this.menu.push({
-      label: 'Transactions', icon: 'pi pi-fw pi-briefcase',
-      items: [
-        {label: 'Create a Donation Drive', icon: 'pi pi-fw pi-bars',
-          command: () => { window.location = "CreateDonationDrive"} },
-        {label: 'Create Fund Transfer Request', icon: 'pi pi-fw pi-bars',
-          command: () => { window.location = "CreateFundTransferRequest"} },
-        {label: 'Make a Donation', icon: 'pi pi-fw pi-bars',
-          command: () => { window.location = "MakeDonation"} },
-        {label: 'Transfer Funds', icon: 'pi pi-fw pi-bars',
-          command: () => { window.location = "TransferFund"} },
-        {label: 'Validate Fund Transfer Request', icon: 'pi pi-fw pi-bars',
-          command: () => { window.location = "ValidateFundTransferRequest"} },
-        {label: 'Upload Receipt', icon: 'pi pi-fw pi-bars',
-          command: () => { window.location = "UploadReceipt"} },
-        {label: 'Wallet Transaction', icon: 'pi pi-fw pi-bars',
-          command: () => { window.location = "WalletTransaction"} }
       ]
     });
     this.menu.push({
       label: 'Log out', icon: 'pi pi-fw pi-briefcase',
       command: () => {
         localStorage.removeItem("username");
-        localStorage.removeItem("participant");
         localStorage.removeItem("nickname");
         this.setState({menuActive: false,mobileMenuActive: false});
       }
@@ -148,7 +105,6 @@ class RootContainer extends Component {
   }
 
   render() {
-    let logo = require('../assets/img/logo.png');
     let wrapperClass = classNames('layout-wrapper', 'layout-static', {
       'layout-static-sidebar-inactive': !this.state.menuActive,
       'layout-mobile-sidebar-active': this.state.mobileMenuActive
@@ -158,10 +114,10 @@ class RootContainer extends Component {
     return (
       <div>
         <Helmet
-          titleTemplate="%s - IS4302 Charity"
-          defaultTitle="IS4302 Charity"
+          titleTemplate="%s - IS4100"
+          defaultTitle="IS4100"
         >
-          <meta name="description" content="IS4302 Charity" />
+          <meta name="description" content="IS4100" />
         </Helmet>
         <div className={wrapperClass} onClick={this.onWrapperClick}>
           <Topbar onToggleMenu={this.onToggleMenu}/>
@@ -169,9 +125,6 @@ class RootContainer extends Component {
           <div ref={el => this.sidebar = el} className={sidebarClassName} onClick={this.onSidebarClick}>
             <ScrollPanel ref={(el) => this.layoutMenuScroller = el} style={{height:'100%'}}>
               <div className="layout-sidebar-scroll-content" >
-                <div className="layout-logo">
-                  <img alt="Logo" src={logo} style={{resizeMode: 'contain', height: '50px'}}/>
-                </div>
                 <InlineProfile />
                 <Menu model={this.menu} onMenuItemClick={this.onMenuItemClick} />
               </div>
