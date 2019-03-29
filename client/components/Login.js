@@ -29,7 +29,7 @@ export default class Login extends Component {
     httpPOST('http://localhost:3000/api/public/login', data)
     .then(response => {
       localStorage.setItem('username', this.state.username);
-      localStorage.setItem('nickname', response.data.nickname);
+      localStorage.setItem('nickname', this.state.username);
       window.location.href = '/Home'; // Redirects to main page
     })
     .catch(error => {
