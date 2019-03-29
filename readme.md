@@ -20,3 +20,8 @@
 5.  Inside '/client/routers/index.js', import the new js file you just created and add a corresponding <AuthenticatedRoute> tag with 'path' being the link you want to associate with the component, and 'component' being the component you have just created
 6.  When you are done with 1-5, navigate to 'localhost:3000/<URL>' in your browser to see if it works. Then start developing whatever html content or wtv you want inside the return function under render().
 7.  When you are done, refresh the page to view the changes made.
+
+### Useful links
+1.  [Bootstrap](https://react-bootstrap.github.io/getting-started/introduction/) (For instructions on how to use Bootstrap)
+2.  [PrimeReact](https://www.primefaces.org/primereact/#/setup) (For components you can use out of the box)
+3.  [PrimeFlex](https://github.com/primefaces/primeflex) (For setting up layout)
