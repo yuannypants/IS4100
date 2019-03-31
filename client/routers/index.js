@@ -12,7 +12,9 @@ import HomePage from '../components/HomePage';
 
 // Private components
 import Home from '../components/Home';
-import Page from '../components/Page'
+import Page from '../components/Page';
+import Settings from '../components/Settings';
+import Projects from '../components/Projects';
 
 const history = require("history").createBrowserHistory();
 
@@ -29,6 +31,8 @@ const RootClientRouter = () => (
 
       <Route exact path="/Login" component={Login}/>
       <Route exact path="/Register" component={Register}/>
+      <Route exact path="/Settings" component={Settings}/>
+      <Route exact path="/Projects" component={Projects}/>
       <Route path="" component={HomePage}/>
       <Route component={NotFound}/>
     </Switch>

@@ -10,6 +10,10 @@ import config from '../webpack/webpack.config.dev';
 import apiRouter from './routes';
 import * as errorHandler from './middlewares/errorHandler';
 
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faIgloo } from '@fortawesome/free-solid-svg-icons'
+library.add(faIgloo)
+
 // If we are developing, enable Webpack hot reloading for faster development times
 if (process.env.MODE === 'development') {
   const compiler = webpack(config);
