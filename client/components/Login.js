@@ -20,7 +20,7 @@ export default class Login extends Component {
     this.onClickSubmit = this.onClickSubmit.bind(this);
   }
 
-  onClickSubmit() {
+  onClickSubmit(is_project_manager) {
     let data = {
       username: this.state.username,
       password: this.state.password
@@ -30,7 +30,10 @@ export default class Login extends Component {
     .then(response => {
       localStorage.setItem('username', this.state.username);
       localStorage.setItem('nickname', this.state.username);
-      window.location.href = '/Home'; // Redirects to main page
+      if (is_project_manager)
+        window.location.href = '/Projects'; // PM main page
+      else
+        window.location.href = '/Home'; // Developer main page
     })
     .catch(error => {
       let errorMsg = 'An error was encountered.';
@@ -71,7 +74,10 @@ export default class Login extends Component {
                 </div>
               }
               <div className="p-col-10">
-                <Button label="Login" icon="pi pi-user-plus" onClick={this.onClickSubmit}/>
+                <Button label="Login As Deveploper" icon="pi pi-user-plus" onClick={(e) => this.onClickSubmit(false, e)}/>
+              </div>
+              <div className="p-col-10">
+                <Button label="Login As Project Manager" icon="pi pi-user-plus" onClick={(e) => this.onClickSubmit(true, e)}/>
               </div>
             </div>
           </div>

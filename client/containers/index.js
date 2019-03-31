@@ -79,6 +79,7 @@ class RootContainer extends Component {
         localStorage.removeItem("username");
         localStorage.removeItem("nickname");
         this.setState({menuActive: false,mobileMenuActive: false});
+        window.location.href='/Login';
       }
     });
   }

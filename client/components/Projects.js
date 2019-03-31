@@ -5,7 +5,8 @@ import Bootstrap from 'bootstrap/dist/css/bootstrap.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as fa from "@fortawesome/free-solid-svg-icons";
 // END OF DON'T REMOVE
-import Button from 'react-bootstrap/Button';
+// NEED TO IMPORT STUFF FROM REACT-BOOTSTRAP
+import {Row, Col, Button} from 'react-bootstrap';
 import { JsonToTable } from 'react-json-to-table';
 
 // Class for Projects
@@ -41,13 +42,13 @@ export default class Projects extends Component {
     // Note: "function(item) { ...}" more or less same as "item => {...}"
     return projects.map((project) => {
         return (
-            <div class='row' style={{ padding: "10px 0 10px 0" }}>
-                <div class='col-md-10'>
+            <Row style={{ padding: "10px 0 10px 0" }}>
+                <Col md={{ span: 10 }}>
                     {/* .name and .description based on project object */ } 
                     <b>{ project.name } </b> <br/>
                     <i> { project.description } </i>
-                </div>
-                <div class='col-md-2'>
+                </Col>
+                <Col md={{ span: 2 }}>
                     <a href='/Sprints'>
                     <Button class='btn btn-success'>
                         { /* Serarch for the icon on Font-Awesome website 
@@ -59,10 +60,10 @@ export default class Projects extends Component {
                     </Button>
                     </a>
                     
-                </div>
+                </Col>
                 { /* Divider line between 2 projects */ } 
                 <div class='col-md-12'><hr/></div>
-            </div>
+            </Row>
         )
     })
   }
