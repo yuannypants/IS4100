@@ -21,22 +21,23 @@ const history = require("history").createBrowserHistory();
 const RootClientRouter = () => (
   <Router history={history}>
     <Switch>
+      // Public facing, no need Authentication!
       <Route path="/" exact component={HomePage}/>
-
-      <AuthenticatedRoute exact path="/Page" component={Page}/>
-      <AuthenticatedRoute path="/Page/" component={Page}/>
-
-      
       <Route exact path="/Login" component={Login}/>
       <Route exact path="/Register" component={Register}/>
       
+      // Placeholder...
+      <AuthenticatedRoute exact path="/Page" component={Page}/>
+      <AuthenticatedRoute path="/Page/" component={Page}/>
+
+      // Routes that need authentication
       <AuthenticatedRoute exact path="/Developer" component={Developer}/>
       <AuthenticatedRoute path="/Developer/" component={Developer}/>
       <AuthenticatedRoute exact path="/Settings" component={Settings}/>
       <AuthenticatedRoute exact path="/Projects" component={Projects}/>
       <AuthenticatedRoute path="" component={HomePage}/>
       <AuthenticatedRoute component={NotFound}/>
-      
+
     </Switch>
   </Router>
 );
