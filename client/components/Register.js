@@ -27,7 +27,7 @@ export default class Register extends Component {
     httpPOST('http://localhost:3000/api/public/register', data)
     .then(response => {
       alert('Your account has been successfully registered!');
-      window.location.href = '/login'; // Redirects to main page
+      window.location.href = '/Login'; // Redirects to main page
     })
     .catch(error => {
       let errorMsg = 'An error was encountered.';

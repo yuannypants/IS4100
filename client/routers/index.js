@@ -11,7 +11,7 @@ import Register from '../components/Register';
 import HomePage from '../components/HomePage';
 
 // Private components
-import Home from '../components/Home';
+import Developer from '../components/Developer';
 import Page from '../components/Page';
 import Settings from '../components/Settings';
 import Projects from '../components/Projects';
@@ -26,15 +26,17 @@ const RootClientRouter = () => (
       <AuthenticatedRoute exact path="/Page" component={Page}/>
       <AuthenticatedRoute path="/Page/" component={Page}/>
 
-      <AuthenticatedRoute exact path="/Home" component={Home}/>
-      <AuthenticatedRoute path="/Home/" component={Home}/>
-
+      
       <Route exact path="/Login" component={Login}/>
       <Route exact path="/Register" component={Register}/>
-      <Route exact path="/Settings" component={Settings}/>
-      <Route exact path="/Projects" component={Projects}/>
-      <Route path="" component={HomePage}/>
-      <Route component={NotFound}/>
+      
+      <AuthenticatedRoute exact path="/Developer" component={Developer}/>
+      <AuthenticatedRoute path="/Developer/" component={Developer}/>
+      <AuthenticatedRoute exact path="/Settings" component={Settings}/>
+      <AuthenticatedRoute exact path="/Projects" component={Projects}/>
+      <AuthenticatedRoute path="" component={HomePage}/>
+      <AuthenticatedRoute component={NotFound}/>
+      
     </Switch>
   </Router>
 );

@@ -78,7 +78,9 @@ export default class Projects extends Component {
         </Helmet>
         <div className="p-col-12">
           <div className="card card-w-title">
-            <h1>Projects</h1>
+            <Row style={{ 'text-align' : 'center'}}>
+                <Col md={{span:12}}> <h1>Project Manager Dashboard</h1> <br/> </Col>
+            </Row>
             {
               // Make sure there are projects, then generate the view for it
               this.state.projects && this.generateProjectView(this.state.projects)

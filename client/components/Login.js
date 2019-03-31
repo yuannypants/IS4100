@@ -33,7 +33,7 @@ export default class Login extends Component {
       if (is_project_manager)
         window.location.href = '/Projects'; // PM main page
       else
-        window.location.href = '/Home'; // Developer main page
+        window.location.href = '/Developer'; // Developer main page
     })
     .catch(error => {
       let errorMsg = 'An error was encountered.';

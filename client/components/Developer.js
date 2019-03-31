@@ -3,7 +3,7 @@ import Helmet from 'react-helmet';
 import { JsonToTable } from 'react-json-to-table';
 import { httpGET } from '../utils/httpUtils';
 
-export default class Home extends Component {
+export default class Developer extends Component {
   constructor(props) {
     super(props);
 
