@@ -15,6 +15,7 @@ import Developer from '../components/Developer';
 import Page from '../components/Page';
 import Settings from '../components/Settings';
 import Projects from '../components/Projects';
+import Sprints from '../components/Sprints';
 
 const history = require("history").createBrowserHistory();
 
@@ -35,6 +36,7 @@ const RootClientRouter = () => (
       <AuthenticatedRoute path="/Developer/" component={Developer}/>
       <AuthenticatedRoute exact path="/Settings" component={Settings}/>
       <AuthenticatedRoute exact path="/Projects" component={Projects}/>
+      <AuthenticatedRoute exact path="/Sprints" component={Sprints}/>
       <AuthenticatedRoute path="" component={HomePage}/>
       <AuthenticatedRoute component={NotFound}/>
 
