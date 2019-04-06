@@ -17,7 +17,7 @@ export default class HomePage extends Component {
       <div className="p-grid p-fluid">
         <Helmet>
           <title>Home</title>
-          <meta name="description" content="Home - IS4302 Charity" />
+          <meta name="description" content="Home - IS4100 COCOMO" />
         </Helmet>
         <img src={background} style={{height: '100%', width: '100%', resizeMode: 'cover', opacity: '0.5', left: 0, top: 0, position: 'absolute', zIndex: -1}} />
         <div className="p-col-12">

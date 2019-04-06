@@ -74,7 +74,7 @@ export default class Login extends Component {
                 </div>
               }
               <div className="p-col-10">
-                <Button label="Login As Deveploper" icon="pi pi-user-plus" onClick={(e) => this.onClickSubmit(false, e)}/>
+                <Button label="Login As Developer" icon="pi pi-user-plus" onClick={(e) => this.onClickSubmit(false, e)}/>
               </div>
               <div className="p-col-10">
                 <Button label="Login As Project Manager" icon="pi pi-user-plus" onClick={(e) => this.onClickSubmit(true, e)}/>
