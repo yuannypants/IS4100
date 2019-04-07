@@ -66,7 +66,7 @@ export default class Login extends Component {
                 </span>
               </div>
               <div className="p-col-10">
-                <small>Donating for the first time? Register <a href="/Register">here</a>.</small>
+                <small>Don't have an account? Register <a href="/Register">here</a> for free!</small>
               </div>
               {
                 this.state.error && <div className="p-col-10">
@@ -74,10 +74,10 @@ export default class Login extends Component {
                 </div>
               }
               <div className="p-col-10">
-                <Button label="Login As Developer" icon="pi pi-user-plus" onClick={(e) => this.onClickSubmit(false, e)}/>
+                <Button label="Login As Developer" icon="pi pi-sign-in" onClick={(e) => this.onClickSubmit(false, e)}/>
               </div>
               <div className="p-col-10">
-                <Button label="Login As Project Manager" icon="pi pi-user-plus" onClick={(e) => this.onClickSubmit(true, e)}/>
+                <Button label="Login As Project Manager" icon="pi pi-sign-in" onClick={(e) => this.onClickSubmit(true, e)}/>
               </div>
             </div>
           </div>

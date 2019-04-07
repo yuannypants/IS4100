@@ -25,10 +25,10 @@ export default class HomePage extends Component {
             <h1 style={{textAlign: 'center'}}>Welcome to IS4100</h1>
             <div className="p-grid">
               <div className="p-col-2 p-offset-4">
-                <Button label="Click here to Register" icon="pi pi-user" onClick={() => document.location="/Register"}/>
+                <Button label="Click here to Register" icon="pi pi-user-plus" onClick={() => document.location="/Register"}/>
               </div>
               <div className="p-col-2">
-                <Button label="Click here to Login" icon="pi pi-user-plus" onClick={() => document.location="/Login"}/>
+                <Button label="Click here to Login" icon="pi pi-sign-in" onClick={() => document.location="/Login"}/>
               </div>
             </div>
           </div>

@@ -64,17 +64,17 @@ class RootContainer extends Component {
     this.menu = [];
 
     this.menu.push({
-      label: 'Homepage', icon: 'pi pi-fw pi-users',
+      label: 'Homepage', icon: 'pi pi-fw pi-list',
       items: [
-        {label: 'Home', icon: 'pi pi-fw pi-bars',
-          command: () => { window.location = "Home"} },
-        {label: 'Page', icon: 'pi pi-fw pi-bars',
+        {label: 'Settings', icon: 'pi pi-fw pi-chevron-circle-right',
+          command: () => { window.location = "Settings"} },
+        {label: 'Page', icon: 'pi pi-fw pi-chevron-circle-right',
           command: () => { window.location = "Page"} },
 
       ]
     });
     this.menu.push({
-      label: 'Log out', icon: 'pi pi-fw pi-briefcase',
+      label: 'Log out', icon: 'pi pi-fw pi-sign-out',
       command: () => {
         localStorage.removeItem("username");
         localStorage.removeItem("nickname");

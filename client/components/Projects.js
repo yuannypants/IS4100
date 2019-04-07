@@ -73,7 +73,7 @@ export default class Projects extends Component {
     return (
       <div className="p-grid p-fluid p-justify-center">
         <Helmet>
-          <title>Home</title>
+          <title>Project Manager Dashboard</title>
           <meta name="description" content="Settings" />
         </Helmet>
         <div className="p-col-12">

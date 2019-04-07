@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import Helmet from 'react-helmet';
 import { JsonToTable } from 'react-json-to-table';
 import { httpGET } from '../utils/httpUtils';
+import Bootstrap from 'bootstrap/dist/css/bootstrap.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {Row, Col, Button} from 'react-bootstrap';
 
 export default class Developer extends Component {
   constructor(props) {
@@ -10,19 +13,22 @@ export default class Developer extends Component {
     this.state = {
       data: [
         {
-          column1:"Data1",
-          column2:"Data1",
-          column3:"Data1",
+          "Activity":"Task A",
+          "Work allocated (%)":"70",
+          "Duration (Hr)":"20",
+		  "Request Addition Hours":"4",
         },
         {
-          column1:"Data2",
-          column2:"Data2",
-          column3:"Data2",
+          "Activity":"Task B",
+          "Work allocated (%)":"50",
+          "Duration (Hr)":"10",
+		  "Request Addition Hours":"2",
         },
         {
-          column1:"Data3",
-          column2:"Data3",
-          column3:"Data3",
+          "Activity":"Task C",
+          "Work allocated (%)":"20",
+          "Duration (Hr)":"5",
+		  "Request Addition Hours":"1",
         }
       ],
     }
@@ -36,12 +42,17 @@ export default class Developer extends Component {
     return (
       <div className="p-grid p-fluid p-justify-center">
         <Helmet>
-          <title>Home</title>
+          <title>Developer Dashboard</title>
           <meta name="description" content="Home" />
         </Helmet>
         <div className="p-col-12">
           <div className="card card-w-title">
-            <h1>Home</h1>
+			<Row style={{ 'text-align' : 'center'}}>
+                <Col md={{span:12}}> <h1>Developer Dashboard</h1> <br/> </Col>
+            </Row>
+			<Row style={{ 'marginTop' : '-20px', 'marginBottom':'-25px', 'fontWeight':'bold'}}>
+                <Col md={{span:12}}> <p>Current Tasks Assigned</p> <br/> </Col>
+            </Row>
             {
               this.state.data && <JsonToTable json={this.state.data} />
             }

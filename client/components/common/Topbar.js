@@ -24,19 +24,35 @@ export class Topbar extends Component {
           )
         }
         <div className="layout-topbar-icons">
-          <button className="p-link">
-            <span className="layout-topbar-item-text">Events</span>
-            <span className="layout-topbar-icon pi pi-calendar"/>
-            {/*<span className="layout-topbar-badge">5</span>*/}
-          </button>
-          <button className="p-link">
-            <span className="layout-topbar-item-text">Settings</span>
-            <span className="layout-topbar-icon pi pi-cog"/>
-          </button>
-          <button className="p-link">
-            <span className="layout-topbar-item-text">User</span>
-            <span className="layout-topbar-icon pi pi-user"/>
-          </button>
+		  {
+		    localStorage.getItem("username") && (
+			  <a href='/Settings'>
+				<button className="p-link">
+				  <span className="layout-topbar-item-text">Settings</span>
+				  <span className="layout-topbar-icon pi pi-cog"/>
+				</button>
+			  </a>
+			)
+		  }
+		  
+		  {
+			localStorage.getItem("username") && (
+			<button className="p-link">
+				<span className="layout-topbar-item-text">Resource Management</span>
+				<span className="layout-topbar-icon pi pi-user"/>
+			</button>
+			)
+		  }
+		  
+		  {
+			localStorage.getItem("username") && (
+			<button className="p-link">
+				<span className="layout-topbar-item-text">Notification</span>
+				<span className="layout-topbar-icon pi pi-bell"/>
+				{/*<span className="layout-topbar-badge">5</span>*/}
+			</button>
+			)
+		  }
         </div>
       </div>
     );
