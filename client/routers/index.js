@@ -19,6 +19,9 @@ import Sprints from '../components/Sprints';
 import AddEditSprint from '../components/AddEditSprint';
 import Task from '../components/Task';
 import Tasks from '../components/Tasks';
+import ResourceManagement from '../components/ResourceManagement';
+import Resource from '../components/Resource';
+
 
 const history = require("history").createBrowserHistory();
 
@@ -42,6 +45,7 @@ const RootClientRouter = () => (
       <AuthenticatedRoute exact path="/Sprints" component={Sprints}/>
       <AuthenticatedRoute exact path="/Tasks" component={Tasks}/>
       <AuthenticatedRoute exact path="/AddEditSprint" component={AddEditSprint}/>
+      <AuthenticatedRoute exact path="/ResourceManagement" component={ResourceManagement}/>
       <AuthenticatedRoute path="" component={HomePage}/>
       <AuthenticatedRoute component={NotFound}/>
 

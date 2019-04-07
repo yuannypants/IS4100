@@ -72,6 +72,8 @@ class RootContainer extends Component {
           command: () => { window.location = "Page"} },
         {label: 'Tasks', icon: 'pi pi-fw pi-chevron-circle-right',
           command: () => { window.location = "Tasks"} },
+         {label: 'Resource Management', icon: 'pi pi-fw pi-chevron-circle-right',
+          command: () => { window.location = "ResourceManagement"} },
       ]
     });
     this.menu.push({
