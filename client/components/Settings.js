@@ -7,6 +7,7 @@ import {Row, Col, Button} from 'react-bootstrap';
 import NumberFormat from "react-number-format";
 import { WithContext as ReactTags } from 'react-tag-input';
 import './Tags.css';
+import {Container} from 'react-bootstrap';
 
 
 const KeyCodes = {
@@ -23,18 +24,18 @@ export default class Settings extends Component {
 
     this.state = {
 		tags: [
-			{ id: "English", text: "English" },
-			{ id: 'Chinese', text: 'Chinese' },
-			{ id: "Html", text: "Html" },
+			{ id: 'Python', text: 'Python' },
 			{ id: "Java", text: "Java" },
-			{ id: "SQL", text: "SQL" }
+			{ id: "SQL", text: "SQL" },
+			{ id: "English", text: "English" },
+			{ id: 'Chinese', text: 'Chinese' }
 		],
 		suggestions: [
 			{ id: 'JavaScript', text: 'JavaScript' },
 			{ id: 'PHP', text: 'PHP' },
 			{ id: 'React', text: 'React' },
 			{ id: 'Angular', text: 'Angular' },
-			{ id: 'Python', text: 'Python' },
+			{ id: "Html", text: "Html" },
 			{ id: 'JQuery', text: 'JQuery' },
 			{ id: 'Scripting', text: 'Scripting' }
 		]
@@ -74,7 +75,7 @@ export default class Settings extends Component {
   render() {
 	const { tags, suggestions } = this.state;
     return (
-      <div className="p-grid p-fluid p-justify-center">
+      <Container>
         <Helmet>
           <title>User Settings</title>
           <meta name="description" content="Settings" />
@@ -86,34 +87,33 @@ export default class Settings extends Component {
             </Row>
             
 			<Row style={{ 'fontWeight':'bold'}}>
-                <Col md={{span:12}}>Name: <span style={{'marginLeft':'71px'}}/>
+                <Col md={{span:12}}>Name: <span style={{'marginLeft':'97px'}}/>
 				<input type='text' disabled='disabled' value={localStorage.getItem("username")}></input> <br/> </Col>
             </Row> <br/>
 						
 			<Row style={{ 'fontWeight':'bold'}}>
-                <Col md={{span:12}}>Wages ($/hr): <span style={{'marginLeft':'17px'}}/>
-					<input type='text' disabled='disabled' value='80.00'></input>
+                <Col md={{span:12}}>Wages ($/hr): <span style={{'marginLeft':'43.5px'}}/>
+					<input type='text' disabled='disabled' value='$80.00'></input>
 				<br/> 
 				</Col>
             </Row> <br/>
 			
 			<Row style={{ 'fontWeight':'bold'}}>
                 <Col>Skills: 
-					<div style={{'marginLeft':'123px', 'marginTop':'-24px'}}>
+					<div style={{'marginLeft':'150px', 'marginTop':'-24px'}}>
 						<ReactTags 
 							tags={tags}
 							suggestions={suggestions}
 							handleDelete={this.handleDelete}
 							handleAddition={this.handleAddition}
 							handleDrag={this.handleDrag}
-							delimiters={delimiters} 
-							inline={true}/>
+							delimiters={delimiters} />
 					</div>
 				</Col>
             </Row> <br/>
 			
 			<Row style={{ 'fontWeight':'bold'}}>
-                <Col md={{span:12}}>Edit Password: <span style={{'marginLeft':'10px'}}/>
+                <Col md={{span:12}}>Change Password: <span style={{'marginLeft':'10px'}}/>
 					<input type='password'></input> <span style={{'marginLeft':'5px'}}/>
 					<button className="p-link layout-menu-button" onClick={this.onUpdatePassword} style={{'backgroundColor':'lightGray', 'height': '30px', 'width':'66px', 'fontWeight':'bold'}}>
 						<span style={{'marginLeft':'7px'}}>Update</span>
@@ -124,7 +124,7 @@ export default class Settings extends Component {
 			
           </div>
         </div>
-      </div>
+      </Container>
     );
   }
 }
