@@ -76,8 +76,7 @@ class RootContainer extends Component {
     this.menu.push({
       label: 'Log out', icon: 'pi pi-fw pi-sign-out',
       command: () => {
-        localStorage.removeItem("username");
-        localStorage.removeItem("nickname");
+        localStorage.clear();
         this.setState({menuActive: false,mobileMenuActive: false});
         window.location.href='/Login';
       }

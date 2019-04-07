@@ -37,6 +37,7 @@
     "jquery": "^3.3.1",
     "jsonwebtoken": "^8.5.1",
     "method-override": "^3.0.0",
+    "moment": "^2.24.0",
     "morgan": "^1.9.1",
     "primeflex": "^1.0.0-rc.1",
     "primeicons": "^1.0.0",

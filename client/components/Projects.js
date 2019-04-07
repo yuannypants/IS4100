@@ -1,74 +1,72 @@
 import React, {Component} from 'react';
 import Helmet from 'react-helmet';
-// DONT REMOVE - BOOTSTRAP AND FONT-AWESOME
 import Bootstrap from 'bootstrap/dist/css/bootstrap.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as fa from "@fortawesome/free-solid-svg-icons";
-// END OF DON'T REMOVE
-// NEED TO IMPORT STUFF FROM REACT-BOOTSTRAP
-import {Row, Col, Button} from 'react-bootstrap';
-import { JsonToTable } from 'react-json-to-table';
-import {Container} from 'react-bootstrap';
+import { Row, Col, Button } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
+import { httpGET } from '../utils/httpUtils';
 
-// Class for Projects
+const ls = window.localStorage;
+
 export default class Projects extends Component {
-  // Creates a Projects object that is a component of the page
   constructor(props) {
-    // Required to be a component (call superclass component)
     super(props);
-    // Number of dummy projects
-    const NUM_PROJECTS = 5;
-    // Auto-populate a list of projects
-    let projects = [];
-    for (var i = 1; i <= NUM_PROJECTS; i++) {
-        // Add a new project labelled i (new object)
-        projects.push({
-            name: "Project #" + i ,
-            description: "Project description #" + i,
-        })
-    }
-    // State of the Project object (i.e. state of the page)
-    // can be used to access object attributes in the render() function
-    this.state = {
-      'projects': projects
-    }
-  }
-  // Yes it will
-  componentWillMount () {}
 
+    this.state = {
+      projectsList: []
+    }
+
+    this.generateProjectView = this.generateProjectView.bind(this);
+    this.onClickGoToProject = this.onClickGoToProject.bind(this);
+  }
+
+  componentWillMount () {
+    httpGET('http://localhost:3001/projects')
+    .then(response => {
+      console.log(response.data);
+      let retrievedProjects = response.data;
+      this.setState({projectsList:retrievedProjects})
+    })
+     .catch(err => {
+      console.log(err);
+      this.setState({error: 'An error with the server was encountered.'})
+    });
+  }
 
   // Generate the html for the page here
-  generateProjectView(projects) {
+  generateProjectView() {
     // if x = [1,2], then y=x.map(function(item) { return 2 * item }); gives [2,4]
     // Note: "function(item) { ...}" more or less same as "item => {...}"
-    return projects.map((project) => {
-        return (
-            <Row style={{ padding: "10px 0 10px 0" }}>
-                <Col md={{ span: 12 }}>
-                    {/* .name and .description based on project object */ } 
-                    <b>{ project.name } </b> <br/>
-                    <i> { project.description } </i>
-                
-					<a href='/Sprints' style={{ 'float': 'right', 'marginTop':'-20px' }}>
-						<Button class='btn btn-success'>
-							{ /* Serarch for the icon on Font-Awesome website 
-								 https://fontawesome.com/icons?d=gallery
-								 e.g. "door-open" becomes fa.faDoorOpen
-							   */ } 
-							<FontAwesomeIcon icon={fa.faSignInAlt} /> &nbsp;
-							Access Project
-						</Button>
-                    </a>
-				</Col>
-                
-                { /* Divider line between 2 projects */ } 
-                <div class='col-md-12'><hr/></div>
-            </Row>
-        )
+    return this.state.projectsList.map(project => {
+      return (
+        <Row style={{ padding: "10px 0 10px 0" }} key={project.id}>
+          <Col className="col-12">
+            {/* .name and .description based on project object */ }
+            <b>{ project.name } </b><br/>
+            <i>{ project.description }</i>
+
+            <Button
+              className='btn btn-success'
+              style={{ float:"right", marginTop:'-20px' }}
+              onClick={() => this.onClickGoToProject(project.id, project.name)}
+            >
+              { /* Search for the icon on Font-Awesome website https://fontawesome.com/icons?d=gallery e.g. "door-open" becomes fa.faDoorOpen */ }
+              <FontAwesomeIcon icon={fa.faSignInAlt} /> &nbsp; Access Project
+            </Button>
+          </Col>
+          <div className='col-md-12'><hr/></div> { /* Divider line between 2 projects */ }
+        </Row>
+      )
     })
   }
 
-  // Displays the HTML to the user
+  onClickGoToProject(projectId, projectName) {
+    ls.setItem("currentProjectId",projectId);
+    ls.setItem("currentProjectName",projectName);
+    window.location = "Sprints"
+  }
+
   render() {
     return (
       <Container>
@@ -78,12 +76,11 @@ export default class Projects extends Component {
         </Helmet>
         <div className="p-col-12">
           <div className="card card-w-title">
-            <Row style={{ 'text-align' : 'center'}}>
-                <Col md={{span:12}}> <h1>Project Manager Dashboard</h1> <br/> </Col>
+            <Row style={{ textAlign : 'center'}}>
+                <Col className="col-12"><h1>Project Manager Dashboard</h1></Col>
             </Row>
             {
-              // Make sure there are projects, then generate the view for it
-              this.state.projects && this.generateProjectView(this.state.projects)
+              this.state.projectsList && this.generateProjectView() // Make sure there are projects, then generate the view for it
             }
           </div>
         </div>

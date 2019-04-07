@@ -36,7 +36,16 @@ export default class Developer extends Component {
   }
 
   componentWillMount () {
+    httpGET('http://localhost:3001/projects')
+    .then(response => {
+      console.log(response.data);
 
+
+    })
+    .catch(err => {
+      console.log(err);
+      this.setState({error: 'An error with the server was encountered.'})
+    });
   }
 
   render() {

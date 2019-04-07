@@ -17,7 +17,7 @@ export class Topbar extends Component {
   render() {
     return (
       <div className="layout-topbar clearfix" >
-	  <Container>
+	      <Container>
         {
           localStorage.getItem("username") && (
             <button className="p-link layout-menu-button" onClick={this.props.onToggleMenu}>
@@ -25,38 +25,36 @@ export class Topbar extends Component {
             </button>
           )
         }
-        <div className="layout-topbar-icons">
-		  {
-		    localStorage.getItem("username") && (
-			  <a href='/Settings'>
-				<button className="p-link">
-				  <span className="layout-topbar-item-text">Settings</span>
-				  <span className="layout-topbar-icon pi pi-cog"/>
-				</button>
-			  </a>
-			)
-		  }
-		  
-		  {
-			localStorage.getItem("username") && (
-			<button className="p-link">
-				<span className="layout-topbar-item-text">Resource Management</span>
-				<span className="layout-topbar-icon pi pi-user"/>
-			</button>
-			)
-		  }
-		  
-		  {
-			localStorage.getItem("username") && (
-			<button className="p-link">
-				<span className="layout-topbar-item-text">Notification</span>
-				<span className="layout-topbar-icon pi pi-bell"/>
-				{/*<span className="layout-topbar-badge">5</span>*/}
-			</button>
-			)
-		  }
-        </div>
-		</Container>
+          <div className="layout-topbar-icons">
+          {
+            localStorage.getItem("username") && (
+              <a href='/Settings'>
+              <button className="p-link">
+                <span className="layout-topbar-item-text">Settings</span>
+                <span className="layout-topbar-icon pi pi-cog"/>
+              </button>
+              </a>
+            )
+          }
+          {
+            localStorage.getItem("username") && (
+              <button className="p-link">
+                <span className="layout-topbar-item-text">Resource Management</span>
+                <span className="layout-topbar-icon pi pi-user"/>
+              </button>
+            )
+          }
+          {
+            localStorage.getItem("username") && (
+              <button className="p-link">
+                <span className="layout-topbar-item-text">Notification</span>
+                <span className="layout-topbar-icon pi pi-bell"/>
+                {/*<span className="layout-topbar-badge">5</span>*/}
+              </button>
+            )
+          }
+          </div>
+		    </Container>
       </div>
     );
   }

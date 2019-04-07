@@ -1,106 +1,113 @@
 import React, {Component} from 'react';
 import Helmet from 'react-helmet';
-// DONT REMOVE - BOOTSTRAP AND FONT-AWESOME
 import Bootstrap from 'bootstrap/dist/css/bootstrap.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as fa from "@fortawesome/free-solid-svg-icons";
-// END OF DON'T REMOVE
-// NEED TO IMPORT STUFF FROM REACT-BOOTSTRAP
 import {Row, Col, Button, Container} from 'react-bootstrap';
-import { JsonToTable } from 'react-json-to-table';
+import { httpGET, httpUPDATE } from '../utils/httpUtils';
+import moment from 'moment';
 
-// Class for Sprints
+const ls = window.localStorage;
+
 export default class Sprints extends Component {
-  // Creates a Sprints object that is a component of the page
   constructor(props) {
-    // Required to be a component (call superclass component)
     super(props);
-    // Number of dummy sprints
-    const NUM_SPRINTS = 5;
-    // Auto-populate a list of sprints
-    let sprints = [];
-    let duration = [14, 14, 14, 14, 14]
-    let costs = [100, 200, 300, 400, 500]
-    for (var i = 1; i <= NUM_SPRINTS; i++) {
-        // Add a new sprint labelled i (new object)
-        sprints.push({
-            name: "Sprint #" + i ,
-            description: "Sprint description #" + i,
-            expected_duration: duration[i - 1],
-            expected_cost: costs[i - 1]
-        })
-    }
-    // State of the Sprint object (i.e. state of the page)
-    // can be used to access object attributes in the render() function
+
     this.state = {
       // TODO
-      'sprints': sprints
+      currentProjectData: {},
+      sprintsList: []
+    }
+
+    this.generateSprintsView = this.generateSprintsView.bind(this);
+    this.onClickDeleteSprint = this.onClickDeleteSprint.bind(this);
+    this.onClickAddNewSprint = this.onClickAddNewSprint.bind(this);
+    this.onClickViewPastStatistics = this.onClickViewPastStatistics.bind(this);
+    this.onClickEditSprint = this.onClickEditSprint.bind(this);
+  }
+
+  componentWillMount () {
+    let currentProjectId = ls.getItem("currentProjectId");
+    if (currentProjectId !== null) {
+      httpGET('http://localhost:3001/projects?id=' + currentProjectId)
+      .then(response => {
+        console.log(response.data);
+        let retrievedProject = response.data[0];
+        this.setState({currentProjectData: retrievedProject, sprintsList: retrievedProject.sprints})
+      })
+      .catch(err => {
+        console.log(err);
+        this.setState({error: 'An error with the server was encountered.'})
+      });
+    } else {
+      window.location = "Projects"
     }
   }
-  // Yes it will
-  componentWillMount () {}
 
-  // Remove a sprint on the fly
-  removeSprint(sprintName) {
-      // New list of sprints
-      /*let new_sprints = [...this.state.sprints];
-      for (let i = 0; i < this.state.sprints.length; i++) {
-          if (new_sprints[i].name == sprintName) {
-              // Deletes the item at index i
-              new_sprints.splice(i, 1);
-              break;
-          }
-      }*/
-      this.setState({ 'sprints': this.state.sprints.filter(sprint => {
-          return sprint.name !== sprintName;
-      }) });
+  generateSprintsView() {
+    return this.state.sprintsList.map(sprint => {
+      let expectedDuration = moment(sprint.endDateTime).diff(moment(sprint.startDateTime), "days");
+      return (
+        <Row style={{ padding: "10px 0 10px 0" }} key={sprint.id}>
+          <Col className="p-col-4">
+            <b>{ sprint.name }</b> <br/>
+            <i>{ sprint.description }</i>
+          </Col>
+          <Col className="p-col-3">
+            <b>Expected Duration</b><br/>
+            { expectedDuration } Days
+          </Col>
+          <Col className="p-col-3">
+            <b>Expected Costs</b> <br/>
+            ${ sprint.budget }
+          </Col>
+          <Col className="p-col-2" style={{ 'float': 'right', 'marginLeft':'60px'}}>
+            <Button onClick={() => this.onClickEditSprint()} variant='warning' style={{marginRight: '5px'}}>
+                <FontAwesomeIcon icon={fa.faEdit} />
+            </Button>
+
+            <Button onClick={() => this.onClickDeleteSprint(sprint.id)} variant='danger' style={{marginRight: '5px'}}>
+              <FontAwesomeIcon icon={fa.faTrash} />
+            </Button>
+
+          </Col>
+          <div className='col-md-12'><hr/></div>
+        </Row>
+      )
+    })
   }
 
+  onClickAddNewSprint() {
+    window.location = "AddEditSprint"
+  }
 
-  // Generate the html for the page here
-  generateSprintsView(sprints) {
-    // if x = [1,2], then y=x.map(function(item) { return 2 * item }); gives [2,4]
-    // Note: "function(item) { ...}" more or less same as "item => {...}"
-    return sprints.map((sprint) => {
-        return (
-            <Row style={{ padding: "10px 0 10px 0" }}>
-                <Col md={{ span: 4 }}>
-                    {/* .name and .description based on sprint object */ } 
-                    <b>{ sprint.name } </b> <br/>
-                    <i> { sprint.description } </i>
-                </Col>
-                <Col md={{ span: 3 }}>
-                    {/* .name and .description based on sprint object */ } 
-                    <b>Expected Duration</b> <br/>
-                    { sprint.expected_duration } Days
-                </Col>
-                <Col md={{ span: 3 }}>
-                    {/* .name and .description based on sprint object */ } 
-                    <b>Expected Costs</b> <br/>
-                    $ { sprint.expected_cost } 
-                </Col>
-                <Col style={{ 'float': 'right', 'marginLeft':'60px'}}>
-                    <a href='/AddEditSprint'>
-                    <Button variant='warning'>
-                        { /* Serarch for the icon on Font-Awesome website 
-                             https://fontawesome.com/icons?d=gallery
-                             e.g. "door-open" becomes fa.faDoorOpen
-                           */ } 
-                        <FontAwesomeIcon icon={fa.faEdit} />
-                    </Button>
-                    &nbsp;
-                    </a>
+  onClickViewPastStatistics() {
+    window.location = "SprintStatistics"
+  }
 
-                    <Button variant='danger' onClick={(e) => this.removeSprint(sprint.name, e)}>
-                           <FontAwesomeIcon icon={fa.faTrash} />
-                    </Button>
-                    
-                </Col>
-                { /* Divider line between 2 sprints */ } 
-                <div class='col-md-12'><hr/></div>
-            </Row>
-        )
-    })
+  onClickEditSprint(sprintId) {
+    ls.setItem("currentSprintId",sprintId)
+    window.location = "AddEditSprint"
+  }
+
+  onClickDeleteSprint(sprintId) {
+    if (confirm("Are you sure you want to delete this sprint?")) {
+      let currentProjectId = ls.getItem("currentProjectId");
+      let newSprintsList = this.state.sprintsList.filter(sprint => {return sprint.id !== sprintId});
+      let currentProjectData = this.state.currentProjectData;
+
+      currentProjectData.sprints = newSprintsList
+
+      httpUPDATE('http://localhost:3001/projects/' + currentProjectId, currentProjectData)
+      .then(response => {
+        console.log(response.data);
+        this.setState({sprintsList: newSprintsList, currentProjectData: currentProjectData})
+      })
+       .catch(err => {
+        console.log(err);
+        this.setState({error: 'An error with the server was encountered.'})
+      });
+    }
   }
 
   // Displays the HTML to the user
@@ -108,54 +115,45 @@ export default class Sprints extends Component {
     return (
       <Container>
         <Helmet>
-          <title>Home</title>
-          <meta name="description" content="Settings" />
+          <title>Sprints</title>
+          <meta name="description" content="Sprints" />
         </Helmet>
-		<div className="p-col-12">
-			<div className="card card-w-title">
-				<Row>
-					<Col md={{span:12}}>
-					<Row>
-						<Col md={{span:12}} style={{ 'text-align' : 'center'}}> 
-							<h1> Sprints </h1>
-						</Col>
-					</Row>
-					
-					<Row>
-						<Col md={{span:12}} >
-							<a href='/AddEditSprint'>
-								<Button>
-									<FontAwesomeIcon icon={fa.faPlus} /> &nbsp;
-									New Sprint
-								</Button>
-							</a>
-							&nbsp;
-							<a href='/SprintStatistics'>
-								<Button variant='info' style={{'height':'right'}}>
-									<FontAwesomeIcon icon={fa.faPlus} /> &nbsp;
-									Past Statistics
-								</Button>
-							</a>
-							<span style={{'float':'right'}}>
-								<b> Total Cost: </b> $
-								{ /* Sums up every cost in list of sprints */
-								  /* reduce --> reduces a list to a single value */
-									this.state.sprints.reduce((accum, x) => {
-									return accum + x.expected_cost; }, 0) 
-								}
-							</span>
-						</Col>
-					</Row>
-					<hr/>
+        <div className="p-col-12">
+          <div className="card card-w-title">
+            <Row>
+              <Col className="p-col-12">
+              <Row>
+                <Col className="p-col-12" style={{ textAlign : 'center'}}>
+                  <h1>Sprints{ " for " + ls.getItem("currentProjectName")}</h1>
+                </Col>
+              </Row>
 
-					{
-					  // TODO
-					  this.state.sprints && this.generateSprintsView(this.state.sprints)
-					}
-				  </Col>
-				</Row>
-			</div>
-		</div>
+              <Row>
+                <Col className="p-col-12" >
+                  <Button onClick={() => this.onClickAddNewSprint()} style={{marginRight: '5px'}}>
+                    <FontAwesomeIcon icon={fa.faPlus} /> &nbsp;New Sprint
+                  </Button>
+                  <Button onClick={() => this.onClickViewPastStatistics()} variant='info' style={{marginRight: '5px'}}>
+                    <FontAwesomeIcon icon={fa.faPlus} /> &nbsp;Past Statistics
+                  </Button>
+                  <span style={{float:'right'}}>
+                    <b>Total Cost:</b> $
+                    {
+                      this.state.sprintsList ?
+                        this.state.sprintsList.reduce((cumulativeCost, sprint) => { return cumulativeCost + sprint.budget }, 0) : 0
+                    }
+                  </span>
+                </Col>
+              </Row>
+              <hr/>
+              {
+                // TODO
+                this.state.sprintsList && this.generateSprintsView()
+              }
+              </Col>
+            </Row>
+          </div>
+        </div>
       </Container>
     );
   }
