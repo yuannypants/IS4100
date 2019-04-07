@@ -11,6 +11,7 @@ export default class Register extends Component {
 
     this.state = {
       username: '',
+      nickname: '',
       password: '',
       error: null
     }
@@ -21,11 +22,16 @@ export default class Register extends Component {
   onClickSubmit() {
     let data = {
       username: this.state.username,
-      password: this.state.password
+      nickname: this.state.username,
+      password: this.state.password,
+      type: "developer",
+      wageRate: 80,
+      tags: ""
     }
 
-    httpPOST('http://localhost:3000/api/public/register', data)
+    httpPOST('http://localhost:3001/users', data)
     .then(response => {
+      alert(JSON.stringify(response.data,null,2));
       alert('Your account has been successfully registered!');
       window.location.href = '/Login'; // Redirects to main page
     })
@@ -50,6 +56,12 @@ export default class Register extends Component {
                 <span className="p-float-label">
                   <InputText id="usernameInput" value={this.state.username} onChange={e => this.setState({username: e.target.value})} />
                   <label htmlFor="usernameInput">Username</label>
+                </span>
+              </div>
+              <div className="p-col-10" style={{marginTop:'15px'}}>
+                <span className="p-float-label">
+                  <InputText id="nicknameInput" value={this.state.nickname} onChange={e => this.setState({nickname: e.target.value})} />
+                  <label htmlFor="nicknameInput">Nickname</label>
                 </span>
               </div>
               <div className="p-col-10" style={{marginTop:'15px'}}>

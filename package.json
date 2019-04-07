@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "babel-node ./server/app.js",
+    "startServer": "json-server --port 3001 --watch data.json",
     "webpack:dev": "cross-env NODE_ENV=development webpack --config ./webpack/webpack.config.dev.js",
     "webpack:prod": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.config.prod.js",
     "build": "rimraf dist && npm run webpack:dev && npm run start",
@@ -51,7 +52,8 @@
     "react-number-format": "^4.0.7",
     "react-router-dom": "^5.0.0",
     "react-tag-input": "^6.4.0",
-    "react-transition-group": "^2.7.1"
+    "react-transition-group": "^2.7.1",
+    "urlencode": "^1.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",

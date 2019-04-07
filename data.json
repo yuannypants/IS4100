@@ -1,0 +1,88 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "boss",
+      "nickname": "John Smith",
+      "password": "password",
+      "userType": "manager"
+    },
+    {
+      "id": 2,
+      "username": "minion1",
+      "nickname": "John Doe",
+      "password": "password",
+      "userType": "developer",
+      "wageRate": 80,
+      "tags": "Writing"
+    },
+    {
+      "id": 3,
+      "username": "minion2",
+      "nickname": "Jane Doe",
+      "password": "password",
+      "userType": "developer",
+      "wageRate": 80,
+      "tags": "Java"
+    }
+  ],
+  "projects": [
+    {
+      "id": 1,
+      "name": "Project 1",
+      "startDateTime": "2019-02-04T00:00:00+08:00",
+      "endDateTime": "2019-04-05T00:00:00+08:00",
+      "sprints": [
+        {
+          "name": "Sprint #1",
+          "startDateTime": "2019-02-04T00:00:00+08:00",
+          "endDateTime": "2019-02-08T00:00:00+08:00",
+          "budget": 100,
+          "tasks": [
+            {
+              "name": "Task #1",
+              "tags": "Writing, English",
+              "resources": [
+                1,
+                2
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Sprint #2",
+          "startDateTime": "2019-02-11T00:00:00+08:00",
+          "endDateTime": "2019-02-15T00:00:00+08:00",
+          "budget": 100,
+          "tasks": [
+            {
+              "name": "Task #1",
+              "tags": "Writing, English",
+              "resources": [
+                1,
+                2
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Sprint #3",
+          "startDateTime": "2019-02-18T00:00:00+08:00",
+          "endDateTime": "2019-02-22T00:00:00+08:00",
+          "budget": 100,
+          "tasks": [
+            {
+              "name": "Task #1",
+              "tags": "Writing, English",
+              "resources": [
+                1,
+                2
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {}
+  ]
+}

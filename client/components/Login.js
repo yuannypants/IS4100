@@ -3,9 +3,10 @@ import { Password } from 'primereact/password'
 import React, {Component} from 'react';
 import Helmet from 'react-helmet';
 import { InputText } from 'primereact/inputtext';
-import { httpPOST } from '../utils/httpUtils'
+import { httpGET, httpPOST } from '../utils/httpUtils';
+import urlencode from "urlencode";
 
-const localStorage = window.localStorage;
+const ls = window.localStorage;
 
 export default class Login extends Component {
   constructor(props) {
@@ -20,24 +21,29 @@ export default class Login extends Component {
     this.onClickSubmit = this.onClickSubmit.bind(this);
   }
 
-  onClickSubmit(is_project_manager) {
-    let data = {
-      username: this.state.username,
-      password: this.state.password
-    }
+  onClickSubmit() {
+    let username = this.state.username,
+      password = this.state.password;
 
-    httpPOST('http://localhost:3000/api/public/login', data)
+    httpGET('http://localhost:3001/users?username=' + urlencode(username) + '&password=' + urlencode(password))
     .then(response => {
-      localStorage.setItem('username', this.state.username);
-      localStorage.setItem('nickname', this.state.username);
-      if (is_project_manager)
-        window.location.href = '/Projects'; // PM main page
-      else
-        window.location.href = '/Developer'; // Developer main page
+      console.log(response.data);
+      if (response.data.length > 0) {
+        ls.setItem('username', response.data[0].username);
+        ls.setItem('nickname', response.data[0].nickname);
+        ls.setItem('userType', response.data[0].userType);
+        ls.setItem('userData', response.data[0]);
+        if (ls.getItem('userType') === "manager")
+          window.location.href = '/Projects'; // PM main page
+        else
+          window.location.href = '/Developer'; // Developer main page
+      } else {
+        this.setState({error: 'Invalid username/password.'})
+      }
     })
-    .catch(error => {
-      let errorMsg = 'An error was encountered.';
-      this.setState({error: errorMsg})
+    .catch(err => {
+      console.log(err);
+      this.setState({error: 'An error with the server was encountered.'})
     });
   }
 
@@ -74,10 +80,7 @@ export default class Login extends Component {
                 </div>
               }
               <div className="p-col-10">
-                <Button label="Login As Developer" icon="pi pi-sign-in" onClick={(e) => this.onClickSubmit(false, e)}/>
-              </div>
-              <div className="p-col-10">
-                <Button label="Login As Project Manager" icon="pi pi-sign-in" onClick={(e) => this.onClickSubmit(true, e)}/>
+                <Button label="Log In" icon="pi pi-sign-in" onClick={(e) => this.onClickSubmit()}/>
               </div>
             </div>
           </div>
