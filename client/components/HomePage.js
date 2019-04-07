@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Helmet from 'react-helmet';
 import { Button } from 'primereact/button'
 import 'primeicons/primeicons.css';
+import {Container} from 'react-bootstrap';
 
 export default class HomePage extends Component {
   constructor(props) {
@@ -14,7 +15,7 @@ export default class HomePage extends Component {
   render() {
     let background = require('../assets/img/background.jpg');
     return (
-      <div className="p-grid p-fluid">
+      <Container>
         <Helmet>
           <title>Home</title>
           <meta name="description" content="Home - IS4100 COCOMO" />
@@ -24,16 +25,16 @@ export default class HomePage extends Component {
           <div className="card card-w-title">
             <h1 style={{textAlign: 'center'}}>Welcome to IS4100</h1>
             <div className="p-grid">
-              <div className="p-col-2 p-offset-4">
+              <div className="p-offset-4" style={{'marginTop':'20px'}}> 
                 <Button label="Click here to Register" icon="pi pi-user-plus" onClick={() => document.location="/Register"}/>
               </div>
-              <div className="p-col-2">
+              <div style={{'marginLeft':'20px', 'marginTop':'20px'}}>
                 <Button label="Click here to Login" icon="pi pi-sign-in" onClick={() => document.location="/Login"}/>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </Container>
     );
   }
 }
