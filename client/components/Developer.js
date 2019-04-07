@@ -5,6 +5,7 @@ import { httpGET } from '../utils/httpUtils';
 import Bootstrap from 'bootstrap/dist/css/bootstrap.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {Row, Col, Button} from 'react-bootstrap';
+import {Container} from 'react-bootstrap';
 
 export default class Developer extends Component {
   constructor(props) {
@@ -40,7 +41,7 @@ export default class Developer extends Component {
 
   render() {
     return (
-      <div className="p-grid p-fluid p-justify-center">
+      <Container>
         <Helmet>
           <title>Developer Dashboard</title>
           <meta name="description" content="Home" />
@@ -58,7 +59,7 @@ export default class Developer extends Component {
             }
           </div>
         </div>
-      </div>
+      </Container>
     );
   }
 }

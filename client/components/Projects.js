@@ -8,6 +8,7 @@ import * as fa from "@fortawesome/free-solid-svg-icons";
 // NEED TO IMPORT STUFF FROM REACT-BOOTSTRAP
 import {Row, Col, Button} from 'react-bootstrap';
 import { JsonToTable } from 'react-json-to-table';
+import {Container} from 'react-bootstrap';
 
 // Class for Projects
 export default class Projects extends Component {
@@ -43,24 +44,23 @@ export default class Projects extends Component {
     return projects.map((project) => {
         return (
             <Row style={{ padding: "10px 0 10px 0" }}>
-                <Col md={{ span: 10 }}>
+                <Col md={{ span: 12 }}>
                     {/* .name and .description based on project object */ } 
                     <b>{ project.name } </b> <br/>
                     <i> { project.description } </i>
-                </Col>
-                <Col md={{ span: 2 }}>
-                    <a href='/Sprints'>
-                    <Button class='btn btn-success'>
-                        { /* Serarch for the icon on Font-Awesome website 
-                             https://fontawesome.com/icons?d=gallery
-                             e.g. "door-open" becomes fa.faDoorOpen
-                           */ } 
-                        <FontAwesomeIcon icon={fa.faSignInAlt} /> &nbsp;
-                        Access Project
-                    </Button>
+                
+					<a href='/Sprints' style={{ 'float': 'right', 'marginTop':'-20px' }}>
+						<Button class='btn btn-success'>
+							{ /* Serarch for the icon on Font-Awesome website 
+								 https://fontawesome.com/icons?d=gallery
+								 e.g. "door-open" becomes fa.faDoorOpen
+							   */ } 
+							<FontAwesomeIcon icon={fa.faSignInAlt} /> &nbsp;
+							Access Project
+						</Button>
                     </a>
-                    
-                </Col>
+				</Col>
+                
                 { /* Divider line between 2 projects */ } 
                 <div class='col-md-12'><hr/></div>
             </Row>
@@ -71,7 +71,7 @@ export default class Projects extends Component {
   // Displays the HTML to the user
   render() {
     return (
-      <div className="p-grid p-fluid p-justify-center">
+      <Container>
         <Helmet>
           <title>Project Manager Dashboard</title>
           <meta name="description" content="Settings" />
@@ -87,7 +87,7 @@ export default class Projects extends Component {
             }
           </div>
         </div>
-      </div>
+      </Container>
     );
   }
 }

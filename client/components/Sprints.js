@@ -79,7 +79,7 @@ export default class Sprints extends Component {
                     <b>Expected Costs</b> <br/>
                     $ { sprint.expected_cost } 
                 </Col>
-                <Col md={{ span: 2 }}>
+                <Col style={{ 'float': 'right', 'marginLeft':'60px'}}>
                     <a href='/AddEditSprint'>
                     <Button variant='warning'>
                         { /* Serarch for the icon on Font-Awesome website 
@@ -111,43 +111,51 @@ export default class Sprints extends Component {
           <title>Home</title>
           <meta name="description" content="Settings" />
         </Helmet>
-        <Row>
-            <Col md={{span:12}}>
-            <Row>
-                <Col md={{span:8}} style={{ 'text-align' : 'center'}}> 
-                    <h1> Sprints </h1>
-                </Col>
-                <Col md={{span:4}} >
-                    <a href='/AddEditSprint'>
-                        <Button>
-                            <FontAwesomeIcon icon={fa.faPlus} /> &nbsp;
-                            New Sprint
-                        </Button>
-                    </a>
-                    &nbsp;
-                    <a href='/SprintStatistics'>
-                        <Button variant='info'>
-                            <FontAwesomeIcon icon={fa.faPlus} /> &nbsp;
-                            Past Statistics
-                        </Button>
-                    </a>
-                </Col>
-                <Col md={{ span: 3, offset: 9 }} style={{ 'fontSize': '20px'}}>
-                    <b> Total Cost: </b> $
-                    { /* Sums up every cost in list of sprints */
-                      /* reduce --> reduces a list to a single value */
-                        this.state.sprints.reduce((accum, x) => {
-                        return accum + x.expected_cost; }, 0) }
-                </Col>
-            </Row>
-            <hr/>
+		<div className="p-col-12">
+			<div className="card card-w-title">
+				<Row>
+					<Col md={{span:12}}>
+					<Row>
+						<Col md={{span:12}} style={{ 'text-align' : 'center'}}> 
+							<h1> Sprints </h1>
+						</Col>
+					</Row>
+					
+					<Row>
+						<Col md={{span:12}} >
+							<a href='/AddEditSprint'>
+								<Button>
+									<FontAwesomeIcon icon={fa.faPlus} /> &nbsp;
+									New Sprint
+								</Button>
+							</a>
+							&nbsp;
+							<a href='/SprintStatistics'>
+								<Button variant='info' style={{'height':'right'}}>
+									<FontAwesomeIcon icon={fa.faPlus} /> &nbsp;
+									Past Statistics
+								</Button>
+							</a>
+							<span style={{'float':'right'}}>
+								<b> Total Cost: </b> $
+								{ /* Sums up every cost in list of sprints */
+								  /* reduce --> reduces a list to a single value */
+									this.state.sprints.reduce((accum, x) => {
+									return accum + x.expected_cost; }, 0) 
+								}
+							</span>
+						</Col>
+					</Row>
+					<hr/>
 
-            {
-              // TODO
-              this.state.sprints && this.generateSprintsView(this.state.sprints)
-            }
-          </Col>
-        </Row>
+					{
+					  // TODO
+					  this.state.sprints && this.generateSprintsView(this.state.sprints)
+					}
+				  </Col>
+				</Row>
+			</div>
+		</div>
       </Container>
     );
   }

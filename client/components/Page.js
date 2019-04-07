@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Helmet from 'react-helmet';
 import { JsonToTable } from 'react-json-to-table';
 import { httpGET } from '../utils/httpUtils';
+import {Container} from 'react-bootstrap';
 
 export default class Page extends Component {
   constructor(props) {
@@ -34,7 +35,7 @@ export default class Page extends Component {
 
   render() {
     return (
-      <div className="p-grid p-fluid p-justify-center">
+      <Container>
         <Helmet>
           <title>Page</title>
           <meta name="description" content="Page" />
@@ -47,7 +48,7 @@ export default class Page extends Component {
             }
           </div>
         </div>
-      </div>
+      </Container>
     );
   }
 }
