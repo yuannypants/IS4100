@@ -134,7 +134,7 @@ export default class EditSprint extends Component {
             <InputText style={{width: '100%'}} value={this.state.sprintDuration} onChange={(e) => this.setState({sprintDuration: e.target.value})} />
           </div>
 
-          <div className="p-col-3" style={{ fontSize: '18px'}}>
+          <div className="p-col-4" style={{ fontSize: '18px'}}>
             <b> Expected Total Cost: </b> $
             {
               this.state.tasksList ?
@@ -147,9 +147,9 @@ export default class EditSprint extends Component {
               View Suggested Budget &nbsp;
             </Button>
           </div>
-          <div className="p-col-6"> </div>
+          <div className="p-col-5"> </div>
 
-          <div className="p-col-3" style={{ 'fontSize': '18px'}}>
+          <div className="p-col-4" style={{ 'fontSize': '18px'}}>
             <b> Expected Total Duration: </b>
             {
               this.state.tasksList &&
@@ -162,6 +162,7 @@ export default class EditSprint extends Component {
               View Suggested Duration
             </Button>
           </div>
+          <div className="p-col-5"> </div>
         </div>
       )
     )
@@ -242,12 +243,11 @@ export default class EditSprint extends Component {
               {
                 this.generateSprintDetails()
               }
-              <div className="p-col-1 p-offset-10">
+              <div className="p-col-4 p-offset-8">
                 <Button onClick={() => this.onClickAddNewTask()} style={{marginRight: '5px'}}>
                   <FontAwesomeIcon icon={fa.faPlus} /> &nbsp;New Task
                 </Button>
-              </div>
-              <div className="p-col-1">
+                &nbsp;
                 <Button onClick={() => this.onClickEditSprint()} variant='info' style={{marginRight: '5px'}}>
                   Update Sprint
                 </Button>
