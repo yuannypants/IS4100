@@ -160,17 +160,17 @@ export default class Sprints extends Component {
           <div className="card card-w-title">
             <h1 style={{ textAlign : 'center'}}>Sprints{ " for " + ls.getItem("currentProjectName")}</h1>
             <div className="p-grid">
-              <div className="p-col-2">
+              <div className="p-col-3">
                 <Button onClick={() => this.setState({dialogVisible: true})} style={{width: '100%'}}>
                   <FontAwesomeIcon icon={fa.faPlus} /> &nbsp;New Sprint
                 </Button>
               </div>
-              <div className="p-col-2">
+              <div className="p-col-3">
                 <Button onClick={() => this.onClickViewIndustryStatistics()} variant='info' style={{width: '100%'}}>
                   <FontAwesomeIcon icon={fa.faPlus} /> &nbsp;Industry Statistics
                 </Button>
               </div>
-              <div className="p-col-2 p-offset-6">
+              <div className="p-col-3 p-offset-3">
                   <b>Total Cost:</b> $
                   {
                     this.state.sprintsList &&
