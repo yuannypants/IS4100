@@ -28,6 +28,7 @@ export default class Sprints extends Component {
 
   componentWillMount () {
     let currentProjectId = ls.getItem("currentProjectId");
+
     if (currentProjectId !== null) {
       httpGET('http://localhost:3001/projects?id=' + currentProjectId)
       .then(response => {
@@ -59,19 +60,18 @@ export default class Sprints extends Component {
           </Col>
           <Col className="p-col-3">
             <b>Expected Costs</b> <br/>
-            ${ sprint.budget }
+            ${ sprint.cost }
           </Col>
           <Col className="p-col-2" style={{ 'float': 'right', 'marginLeft':'60px'}}>
-            <Button onClick={() => this.onClickEditSprint()} variant='warning' style={{marginRight: '5px'}}>
-                <FontAwesomeIcon icon={fa.faEdit} />
+            <Button onClick={() => this.onClickEditSprint(sprint.id, sprint.name)} variant='warning' style={{marginRight: '5px'}}>
+              <FontAwesomeIcon icon={fa.faEdit} />
             </Button>
 
             <Button onClick={() => this.onClickDeleteSprint(sprint.id)} variant='danger' style={{marginRight: '5px'}}>
               <FontAwesomeIcon icon={fa.faTrash} />
             </Button>
-
           </Col>
-          <div className='col-md-12'><hr/></div>
+          <div className="col-md-12"><hr/></div>
         </Row>
       )
     })
@@ -85,8 +85,9 @@ export default class Sprints extends Component {
     window.location = "SprintStatistics"
   }
 
-  onClickEditSprint(sprintId) {
+  onClickEditSprint(sprintId, sprintName) {
     ls.setItem("currentSprintId",sprintId)
+    ls.setItem("currentSprintName", sprintName);
     window.location = "AddEditSprint"
   }
 
@@ -94,14 +95,14 @@ export default class Sprints extends Component {
     if (confirm("Are you sure you want to delete this sprint?")) {
       let currentProjectId = ls.getItem("currentProjectId");
       let newSprintsList = this.state.sprintsList.filter(sprint => {return sprint.id !== sprintId});
-      let currentProjectData = this.state.currentProjectData;
+      let newProjectData = this.state.currentProjectData;
 
-      currentProjectData.sprints = newSprintsList
+      newProjectData.sprints = newSprintsList
 
-      httpUPDATE('http://localhost:3001/projects/' + currentProjectId, currentProjectData)
+      httpUPDATE('http://localhost:3001/projects/' + currentProjectId, newProjectData)
       .then(response => {
         console.log(response.data);
-        this.setState({sprintsList: newSprintsList, currentProjectData: currentProjectData})
+        this.setState({sprintsList: newSprintsList, currentProjectData: newProjectData})
       })
        .catch(err => {
         console.log(err);
@@ -139,8 +140,8 @@ export default class Sprints extends Component {
                   <span style={{float:'right'}}>
                     <b>Total Cost:</b> $
                     {
-                      this.state.sprintsList ?
-                        this.state.sprintsList.reduce((cumulativeCost, sprint) => { return cumulativeCost + sprint.budget }, 0) : 0
+                      this.state.sprintsList &&
+                        this.state.sprintsList.reduce((cumulativeCost, sprint) => { return cumulativeCost + sprint.cost }, 0)
                     }
                   </span>
                 </Col>

@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import Helmet from 'react-helmet';
-import { JsonToTable } from 'react-json-to-table';
 import Bootstrap from 'bootstrap/dist/css/bootstrap.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {Row, Col, Button} from 'react-bootstrap';

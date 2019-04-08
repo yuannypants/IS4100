@@ -1,236 +1,251 @@
 import React, {Component} from 'react';
 import Helmet from 'react-helmet';
-// DONT REMOVE - BOOTSTRAP AND FONT-AWESOME
 import Bootstrap from 'bootstrap/dist/css/bootstrap.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as fa from "@fortawesome/free-solid-svg-icons";
-// END OF DON'T REMOVE
-// NEED TO IMPORT STUFF FROM REACT-BOOTSTRAP
 import {Row, Col, Button, Container, InputGroup, FormControl } from 'react-bootstrap';
-import { JsonToTable } from 'react-json-to-table';
+import { httpGET, httpPOST, httpUPDATE } from '../utils/httpUtils'
+import moment from 'moment';
 
-// Class for AddEditSprint
+const ls = window.localStorage;
+
 export default class AddEditSprint extends Component {
-  // Creates a AddEditSprint object that is a component of the page
   constructor(props) {
-    // Required to be a component (call superclass component)
     super(props);
-    // Number of dummy tasks
-    const NUM_TASKS = 2;
-    // Auto-populate a list of tasks
-    let tasks = [];
-    let duration = [7, 7]
-    let costs = [200, 900]
-    for (var i = 1; i <= NUM_TASKS; i++) {
-        // Add a new task labelled i (new object)
-        tasks.push({
-            name: "Task #" + i ,
-            description: "Task description #" + i,
-            expected_duration: duration[i - 1],
-            expected_cost: costs[i - 1]
-        })
-    }
-    // State of the Sprint object (i.e. state of the page)
-    // can be used to access object attributes in the render() function
+
     this.state = {
       // TODO
-      'tasks': tasks,
-      'sprint_details' : {
-          name: 'Sprint #1',
-          due_date: '22 Apr 2019',
-          baseline_budget:'',
-          baseline_duration:''
-      }
+      currentProjectData: {},
+      sprintsList: [],
+      currentSprintData: {},
+      tasksList: []
+    }
+
+    this.generateTasksView = this.generateTasksView.bind(this);
+    this.generateSprintDetails = this.generateSprintDetails.bind(this);
+    this.onClickDeleteTask = this.onClickDeleteTask.bind(this);
+    this.onClickAddNewTask = this.onClickAddNewTask.bind(this);
+    this.onClickEditTask = this.onClickEditTask.bind(this);
+
+  }
+
+  componentWillMount () {
+    let currentProjectId = ls.getItem("currentProjectId");
+    let currentSprintId = parseInt(ls.getItem("currentSprintId"),10);
+
+    if (currentProjectId !== null) {
+      httpGET('http://localhost:3001/projects?id=' + currentProjectId)
+      .then(response => {
+        // console.log(response.data);
+        let retrievedProject = response.data[0];
+
+        if (currentSprintId !== null) {
+          this.setState({
+            currentProjectData: retrievedProject,
+            sprintsList: retrievedProject.sprints,
+            currentSprintData: retrievedProject.sprints.filter(sprint => {return sprint.id === currentSprintId})[0],
+            tasksList: retrievedProject.sprints.filter(sprint => {return sprint.id === currentSprintId})[0].tasks
+          })
+        } else {
+          this.setState({
+            currentProjectData: retrievedProject,
+            sprintsList: retrievedProject.sprints,
+            currentSprintData: {
+              name: "",
+              description: "",
+              startDateTime: moment().format(),
+              endDateTime: moment().format(),
+              cost: 0,
+              tasks: [],
+            },
+            tasksList: []
+          })
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        this.setState({error: 'An error with the server was encountered.'})
+      });
+    } else {
+      window.location = "Projects"
     }
   }
-  // Yes it will
-  componentWillMount () {}
 
-  // Remove a task on the fly
-  removeTask(taskName) {
-      // New list of tasks
-      /*let new_tasks = [...this.state.tasks];
-      for (let i = 0; i < this.state.tasks.length; i++) {
-          if (new_tasks[i].name == taskName) {
-              // Deletes the item at index i
-              new_tasks.splice(i, 1);
-              break;
-          }
-      }*/
-      this.setState({ 'tasks': this.state.tasks.filter(task => {
-          return task.name !== taskName;
-      }) });
-  }
+  generateTasksView() {
+    return this.state.tasksList.map(task => {
+      let expectedDuration = moment(task.endDateTime).diff(moment(task.startDateTime), "days");
+      return (
+        <div className="p-grid" key={task.id}>
+          <hr/>
+          <div className="p-col-4">
+            <b>{ task.name } </b> <br/>
+            <i>{ task.description }</i>
+          </div>
+          <div className="p-col-3">
+            <b>Expected Duration</b> <br/>
+            { expectedDuration } Days
+          </div>
+          <div className="p-col-3">
+            <b>Expected Costs</b> <br/>
+            $ { task.cost }
+          </div>
+          <div className="p-col-2">
+            <Button onClick={() => this.onClickEditTask()} variant='warning' style={{marginRight: '5px'}}>
+              <FontAwesomeIcon icon={fa.faEdit} />
+            </Button>
 
-
-  // Generate the html for the page here
-  generateTasksView(tasks) {
-    // if x = [1,2], then y=x.map(function(item) { return 2 * item }); gives [2,4]
-    // Note: "function(item) { ...}" more or less same as "item => {...}"
-    return tasks.map((task) => {
-        return (
-            <Row style={{ padding: "10px 0 10px 0" }}>
-                <Col md={{ span: 4 }}>
-                    {/* .name and .description based on task object */ } 
-                    <b>{ task.name } </b> <br/>
-                    <i> { task.description } </i>
-                </Col>
-                <Col md={{ span: 3 }}>
-                    {/* .name and .description based on task object */ } 
-                    <b>Expected Duration</b> <br/>
-                    { task.expected_duration } Days
-                </Col>
-                <Col md={{ span: 3 }}>
-                    {/* .name and .description based on task object */ } 
-                    <b>Expected Costs</b> <br/>
-                    $ { task.expected_cost } 
-                </Col>
-                <Col md={{ span: 2 }}>
-                    <a href='/AddEditSprint'>
-                    <Button variant='warning'>
-                        { /* Serarch for the icon on Font-Awesome website 
-                             https://fontawesome.com/icons?d=gallery
-                             e.g. "door-open" becomes fa.faDoorOpen
-                           */ } 
-                        <FontAwesomeIcon icon={fa.faEdit} />
-                    </Button>
-                    &nbsp;
-                    </a>
-
-                    <Button variant='danger' onClick={(e) => this.removeTask(task.name, e)}>
-                           <FontAwesomeIcon icon={fa.faTrash} />
-                    </Button>
-                    
-                </Col>
-                { /* Divider line between 2 tasks */ } 
-                <div class='col-md-12'><hr/></div>
-            </Row>
-        )
+            <Button onClick={(e) => this.onClickDeleteTask(task.id)} variant='danger' style={{marginRight: '5px'}}>
+               <FontAwesomeIcon icon={fa.faTrash} />
+            </Button>
+          </div>
+          <hr/>
+        </div>
+      )
     })
   }
 
-  generateSprintDetails(details) {
-      return (
-        <Row>
-            <Col md={{ span: 6 }}>
-                <InputGroup className="mb-3">
-                    <InputGroup.Prepend>
-                    <InputGroup.Text id="sprint_name">Sprint Name</InputGroup.Text>
-                    </InputGroup.Prepend>
-                    <FormControl placeholder="Name of sprint"
-                    aria-label="Sprint name" aria-describedby="sprint_name"
-                    value={ details.name }
-                    />
-                </InputGroup>
-            </Col>
-            <Col md={{ span: 6}}></Col>
+  generateSprintDetails() {
+    let currentSprintData = this.state.currentSprintData;
+    return (
+      currentSprintData && (
+        <div className="p-grid">
+          <div className="p-col-6">
+            <InputGroup className="mb-3">
+              <InputGroup.Prepend>
+              <InputGroup.Text id="sprint_name">Sprint Name</InputGroup.Text>
+              </InputGroup.Prepend>
+              <FormControl placeholder="Name of sprint" aria-label="Sprint name" aria-describedby="sprint_name" value={ currentSprintData.name } />
+            </InputGroup>
+          </div>
+          <div className="p-col-6"> </div>
 
-            <Col md={{ span: 6 }}>
-                <InputGroup className="mb-3">
-                    <InputGroup.Prepend>
-                    <InputGroup.Text id="sprint_due_date">Due Date</InputGroup.Text>
-                    </InputGroup.Prepend>
-                    <FormControl placeholder="Sprint Due Date"
-                    aria-label="Sprint due date" aria-describedby="sprint_due_date"
-                    value={ details.due_date }
-                    />
-                </InputGroup>
-            </Col>
-            <Col md={{ span: 6}}></Col>
-        
-            <Col md={{ span:6}}>
-                <InputGroup className="mb-3">
-                    <InputGroup.Prepend>
-                    <InputGroup.Text id="sprint_baseline_budget">Baseline Budget</InputGroup.Text>
-                    </InputGroup.Prepend>
-                    <FormControl placeholder="Baseline Sprint Budget ($)"
-                    aria-label="Baseline sprint budget" aria-describedby="sprint_baseline_budget"
-                    value={ details.baseline_budget }
-                    />
-                </InputGroup>
-            </Col>
-            <Col md={{ span: 2 }}>
-                <Button variant='info'>
-                        Suggest Budget &nbsp;
-                </Button>
-            </Col>
+          <div className="p-col-6">
+            <InputGroup className="mb-3">
+              <InputGroup.Prepend>
+              <InputGroup.Text id="sprint_startDateTime">Start Date</InputGroup.Text>
+              </InputGroup.Prepend>
+              <FormControl placeholder="Sprint Due Date" aria-label="Sprint due date" aria-describedby="sprint_startDateTime" value={ moment(currentSprintData.startDateTime).format('L') } />
+            </InputGroup>
+          </div>
+          <div className="p-col-6"> </div>
 
-            <Col md={{ span: 4 }} style={{ 'fontSize': '18px'}}>
-                    <b> Expected Total Cost: </b> $
-                    { /* Sums up every cost in list of tasks */
-                      /* reduce --> reduces a list to a single value */
-                        this.state.tasks.reduce((accum, x) => {
-                        return accum + x.expected_cost; }, 0) }
-            </Col>
+          <div className="p-col-5">
+            <InputGroup className="mb-3">
+              <InputGroup.Prepend>
+              <InputGroup.Text id="sprint_cost">Baseline Budget</InputGroup.Text>
+              </InputGroup.Prepend>
+              <FormControl placeholder="Baseline Sprint Budget ($)" aria-label="Baseline sprint cost" aria-describedby="sprint_cost" value={ currentSprintData.cost }/>
+            </InputGroup>
+          </div>
+          <div className="p-col-3">
+            <Button variant='info'>
+              Suggest Budget &nbsp;
+            </Button>
+          </div>
 
-            <Col md={{ span: 6 }}>
-                <InputGroup className="mb-3">
-                    <InputGroup.Prepend>
-                    <InputGroup.Text id="sprint_baseline_duration">Baseline Duration</InputGroup.Text>
-                    </InputGroup.Prepend>
-                    <FormControl placeholder="Baseline Sprint Duration (hrs)"
-                    aria-label="Baseline sprint duration" aria-describedby="sprint_baseline_duration"
-                    value={ details.baseline_duration }
-                    />
-                </InputGroup>
-            </Col>
-            <Col md={{ span: 2 }}>
-                <Button variant='info'>
-                        Suggest Duration
-                </Button>
-            </Col>
-            <Col md={{ span: 4  }} style={{ 'fontSize': '18px'}}>
-                    <b> Expected Total Duration: </b> 
-                    { /* Sums up every duration in list of tasks */
-                      /* reduce --> reduces a list to a single value */
-                        this.state.tasks.reduce((accum, x) => {
-                        return accum + x.expected_duration; }, 0) } Days
-            </Col>
-        </Row>
+          <div className="p-col-4" style={{ fontSize: '18px'}}>
+            <b> Expected Total Cost: </b> $
+            {
+              this.state.tasksList ?
+                this.state.tasksList.reduce((cumulativeCost, task) => {return cumulativeCost + task.cost}, 0) : 0
+            }
+          </div>
+
+          <div className="p-col-5">
+            <InputGroup className="mb-3">
+              <InputGroup.Prepend>
+              <InputGroup.Text id="sprint_endDateTime">Baseline Duration</InputGroup.Text>
+              </InputGroup.Prepend>
+              <FormControl placeholder="Baseline Sprint Duration (hrs)" aria-label="Baseline sprint duration" aria-describedby="sprint_endDateTime" value={ moment(currentSprintData.endDateTime).format('L') } />
+            </InputGroup>
+          </div>
+          <div className="p-col-3">
+            <Button variant='info'>
+              Suggest Duration
+            </Button>
+          </div>
+          <div className="p-col-4" style={{ 'fontSize': '18px'}}>
+            <b> Expected Total Duration: </b>
+            {
+              this.state.tasksList &&
+                this.state.tasksList.reduce((cumulativeCost, task) => {return cumulativeCost + moment(task.endDateTime).diff(moment(task.startDateTime), "days")}, 0)
+            } Days
+          </div>
+        </div>
       )
+    )
+  }
+
+  onClickDeleteTask(taskId) {
+    if (confirm("Are you sure you want to delete this task?")) {
+      let currentProjectId = ls.getItem("currentProjectId");
+      let newTasksList = this.state.tasksList.filter(task => {return parseInt(task.id,10) !== parseInt(taskId,10)});
+      let newSprintData = this.state.currentSprintData;
+      let newProjectData = this.state.currentProjectData;
+
+      newSprintData.tasks = newTasksList;
+
+      let index = newProjectData.sprints.findIndex(element => parseInt(element.id,10) === parseInt(newSprintData.id));
+
+      newProjectData.sprints[index] = newSprintData;
+
+      httpUPDATE('http://localhost:3001/projects/' + currentProjectId, newProjectData)
+      .then(response => {
+        console.log(response.data);
+        this.setState({tasksList: newTasksList, currentSprintData: newSprintData, currentProjectData: newProjectData})
+      })
+      .catch(err => {
+        console.log(err);
+        this.setState({error: 'An error with the server was encountered.'})
+      });
+    }
+  }
+
+  onClickAddNewTask() {
+
+  }
+
+  onClickEditTask(taskId) {
+
   }
 
   // Displays the HTML to the user
   render() {
     return (
-      <Container>
+      <div className="p-grid">
         <Helmet>
-          <title>Home</title>
-          <meta name="description" content="Settings" />
+          <title>Add/Edit Sprint</title>
+          <meta name="description" content="Add/Edit Sprint" />
         </Helmet>
-        <Row>
-            <Col md={{span:12}}>
-            <Row>
-                <Col md={{span:8}} style={{ 'text-align' : 'center'}}> 
-                    <h1> Tasks </h1>
-                </Col>
-                <Col md={{span:4}} >
-                    <a href='/AddEditSprint'>
-                        <Button>
-                            <FontAwesomeIcon icon={fa.faPlus} /> &nbsp;
-                            New Task
-                        </Button>
-                    </a>
-                    &nbsp;
-                    <a href='/SprintStatistics'>
-                        <Button variant='info'>
-                            Update Sprint
-                        </Button>
-                    </a>
-                </Col>
-            </Row>
+        <div className="p-col-10 p-offset-1">
+          <div className="card card-w-title">
+            <div className="p-grid">
+              <div className="p-col-8" style={{ textAlign: 'center'}}>
+                <p style={{fontSize: "24px", fontWeight: 600}}>Tasks{ " in " + ls.getItem("currentSprintName") + " for "+ ls.getItem("currentProjectName")}</p>
+              </div>
+              <div className="p-col-2">
+                <Button onClick={() => this.onClickAddNewTask()} style={{marginRight: '5px'}}>
+                  <FontAwesomeIcon icon={fa.faPlus} /> &nbsp; New Task
+                </Button>
+              </div>
+              <div className="p-col-2">
+                <Button onClick={() => this.onClickEditTask()} variant='info' style={{marginRight: '5px'}}>
+                  Update Sprint
+                </Button>
+              </div>
+            </div>
             <hr/>
-
             {
-              this.generateSprintDetails(this.state.sprint_details)
+              this.generateSprintDetails()
             }
+            <hr/>
             {
               // TODO
-              this.state.tasks && this.generateTasksView(this.state.tasks)
+              this.state.tasksList && this.generateTasksView()
             }
-          </Col>
-        </Row>
-      </Container>
+          </div>
+        </div>
+      </div>
     );
   }
 }

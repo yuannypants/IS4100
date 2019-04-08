@@ -31,18 +31,22 @@
       "name": "Project 1",
       "description": "This is the first project",
       "startDateTime": "2019-02-04T08:00:00+08:00",
-      "endDateTime": "2019-04-05T18:00:00+08:00",
+      "endDateTime": "2019-02-22T18:00:00+08:00",
       "sprints": [
         {
           "name": "Sprint #1",
           "description": "This is the first sprint for the first project",
           "startDateTime": "2019-02-04T08:00:00+08:00",
           "endDateTime": "2019-02-08T18:00:00+08:00",
-          "budget": 100,
+          "cost": 100,
           "tasks": [
             {
               "name": "Task #1",
-              "tags": "Writing, English",
+              "description": "This is the first task for the first sprint for the first project",
+              "startDateTime": "2019-02-04T08:00:00+08:00",
+              "endDateTime": "2019-02-08T18:00:00+08:00",
+              "cost": 100,
+              "tags": "Writing, Java",
               "resources": [
                 1,
                 2
@@ -56,11 +60,15 @@
           "description": "This is the second sprint for the first project",
           "startDateTime": "2019-02-11T08:00:00+08:00",
           "endDateTime": "2019-02-15T18:00:00+08:00",
-          "budget": 100,
+          "cost": 100,
           "tasks": [
             {
               "name": "Task #1",
-              "tags": "Writing, English",
+              "description": "This is the first task for the second sprint for the first project",
+              "startDateTime": "2019-02-11T08:00:00+08:00",
+              "endDateTime": "2019-02-15T18:00:00+08:00",
+              "cost": 100,
+              "tags": "Writing, Java",
               "resources": [
                 1,
                 2
@@ -74,11 +82,15 @@
           "description": "This is the third sprint for the first project",
           "startDateTime": "2019-02-18T08:00:00+08:00",
           "endDateTime": "2019-02-22T18:00:00+08:00",
-          "budget": 100,
+          "cost": 100,
           "tasks": [
             {
               "name": "Task #1",
-              "tags": "Writing, English",
+              "description": "This is the first task for the second sprint for the first project",
+              "startDateTime": "2019-02-18T08:00:00+08:00",
+              "endDateTime": "2019-02-22T18:00:00+08:00",
+              "cost": 100,
+              "tags": "Writing, Java",
               "resources": [
                 1,
                 2
@@ -93,18 +105,22 @@
     {
       "name": "Project 2",
       "description": "This is the second project",
-      "startDateTime": "2019-02-04T08:00:00+08:00",
-      "endDateTime": "2019-04-05T18:00:00+08:00",
+      "startDateTime": "2019-02-25T08:00:00+08:00",
+      "endDateTime": "2019-03-15T18:00:00+08:00",
       "sprints": [
         {
           "name": "Sprint #1",
           "description": "This is the first sprint for the second project",
-          "startDateTime": "2019-02-04T08:00:00+08:00",
-          "endDateTime": "2019-02-08T18:00:00+08:00",
-          "budget": 100,
+          "startDateTime": "2019-02-25T08:00:00+08:00",
+          "endDateTime": "2019-03-01T18:00:00+08:00",
+          "cost": 100,
           "tasks": [
             {
               "name": "Task #1",
+              "description": "This is the first task for the first sprint for the second project",
+              "startDateTime": "2019-02-25T08:00:00+08:00",
+              "endDateTime": "2019-03-01T18:00:00+08:00",
+              "cost": 100,
               "tags": "Writing, English",
               "resources": [
                 1,
@@ -117,12 +133,16 @@
         {
           "name": "Sprint #2",
           "description": "This is the second sprint for the second project",
-          "startDateTime": "2019-02-11T08:00:00+08:00",
-          "endDateTime": "2019-02-15T18:00:00+08:00",
-          "budget": 100,
+          "startDateTime": "2019-03-04T08:00:00+08:00",
+          "endDateTime": "2019-03-08T18:00:00+08:00",
+          "cost": 100,
           "tasks": [
             {
               "name": "Task #1",
+              "description": "This is the first task for the second sprint for the second project",
+              "startDateTime": "2019-03-04T08:00:00+08:00",
+              "endDateTime": "2019-03-08T18:00:00+08:00",
+              "cost": 100,
               "tags": "Writing, English",
               "resources": [
                 1,
@@ -135,12 +155,16 @@
         {
           "name": "Sprint #3",
           "description": "This is the third sprint for the second project",
-          "startDateTime": "2019-02-18T08:00:00+08:00",
-          "endDateTime": "2019-02-22T18:00:00+08:00",
-          "budget": 100,
+          "startDateTime": "2019-03-11T08:00:00+08:00",
+          "endDateTime": "2019-03-15T18:00:00+08:00",
+          "cost": 100,
           "tasks": [
             {
               "name": "Task #1",
+              "description": "This is the first task for the third sprint for the second project",
+              "startDateTime": "2019-03-11T08:00:00+08:00",
+              "endDateTime": "2019-03-15T18:00:00+08:00",
+              "cost": 100,
               "tags": "Writing, English",
               "resources": [
                 1,
