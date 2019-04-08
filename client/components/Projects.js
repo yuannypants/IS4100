@@ -1,3 +1,6 @@
+import moment from 'moment'
+import { Dialog } from 'primereact/dialog'
+import { InputText } from 'primereact/inputtext'
 import React, {Component} from 'react';
 import Helmet from 'react-helmet';
 import Bootstrap from 'bootstrap/dist/css/bootstrap.css';
@@ -5,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as fa from "@fortawesome/free-solid-svg-icons";
 import { Row, Col, Button } from 'react-bootstrap';
 import { Container } from 'react-bootstrap';
-import { httpGET } from '../utils/httpUtils';
+import { httpGET, httpPOST } from '../utils/httpUtils';
 
 const ls = window.localStorage;
 
@@ -14,11 +17,16 @@ export default class Projects extends Component {
     super(props);
 
     this.state = {
-      projectsList: []
+      projectsList: [],
+
+      dialogVisible: false,
+      projectName: "",
+      projectDescription: ""
     }
 
     this.generateProjectView = this.generateProjectView.bind(this);
     this.onClickGoToProject = this.onClickGoToProject.bind(this);
+    this.onClickAddNewProject = this.onClickAddNewProject.bind(this);
   }
 
   componentWillMount () {
@@ -40,23 +48,23 @@ export default class Projects extends Component {
     // Note: "function(item) { ...}" more or less same as "item => {...}"
     return this.state.projectsList.map(project => {
       return (
-        <Row style={{ padding: "10px 0 10px 0" }} key={project.id}>
-          <Col className="col-12">
+        <div className="p-grid"  key={project.id}>
+          <div className="col-10">
             {/* .name and .description based on project object */ }
             <b>{ project.name } </b><br/>
             <i>{ project.description }</i>
-
+          </div>
+          <div className="col-2">
             <Button
               className='btn btn-success'
-              style={{ float:"right", marginTop:'-20px' }}
               onClick={() => this.onClickGoToProject(project.id, project.name)}
             >
               { /* Search for the icon on Font-Awesome website https://fontawesome.com/icons?d=gallery e.g. "door-open" becomes fa.faDoorOpen */ }
               <FontAwesomeIcon icon={fa.faSignInAlt} /> &nbsp; Access Project
             </Button>
-          </Col>
+          </div>
           <div className='col-md-12'><hr/></div> { /* Divider line between 2 projects */ }
-        </Row>
+        </div>
       )
     })
   }
@@ -67,24 +75,73 @@ export default class Projects extends Component {
     window.location = "Sprints"
   }
 
+  onClickAddNewProject() {
+    if (confirm("Confirm to add new project?")) {
+      let data = {
+        name: this.state.projectName,
+        description: this.state.projectDescription,
+        startDateTime: moment().format(),
+        endDateTime: moment().format(),
+        sprints: []
+      }
+
+      httpPOST('http://localhost:3001/projects',data)
+      .then(response => {
+        console.log(response.data);
+        window.location = "Projects";
+      })
+       .catch(err => {
+        console.log(err);
+        this.setState({error: 'An error with the server was encountered.'})
+      });
+    }
+  }
+
   render() {
     return (
-      <Container>
+      <div className="p-grid">
         <Helmet>
           <title>Project Manager Dashboard</title>
           <meta name="description" content="Settings" />
         </Helmet>
-        <div className="p-col-12">
+        <div className="p-col-10 p-offset-1">
           <div className="card card-w-title">
-            <Row style={{ textAlign : 'center'}}>
-                <Col className="col-12"><h1>Project Manager Dashboard</h1></Col>
-            </Row>
-            {
-              this.state.projectsList && this.generateProjectView() // Make sure there are projects, then generate the view for it
-            }
+          <h1>Project Manager Dashboard</h1>
+          {
+            this.state.projectsList && this.generateProjectView() // Make sure there are projects, then generate the view for it
+          }
+          <div className="p-col-12">
+            <Button
+              className='btn btn-success'
+              onClick={() => this.setState({dialogVisible:true})}
+            >
+              Add New Project
+            </Button>
+          </div>
           </div>
         </div>
-      </Container>
+        <Dialog header="Add New Project" visible={this.state.dialogVisible} modal={true} onHide={(e) => this.setState({dialogVisible: false})}>
+          <div className="p-grid">
+            <div className="p-col-4">
+              <b>Project Title</b>
+            </div>
+            <div className="p-col-8">
+              <InputText style={{width: '100%'}} value={this.state.projectName} onChange={(e) => this.setState({projectName: e.target.value})} />
+            </div>
+            <div className="p-col-4">
+              <b>Project Description</b>
+            </div>
+            <div className="p-col-8">
+              <InputText style={{width: '100%'}} value={this.state.projectDescription} onChange={(e) => this.setState({projectDescription: e.target.value})} />
+            </div>
+            <div className="p-col-2 p-offset-5">
+              <Button style={{width: '100%'}} onClick={() => this.onClickAddNewProject()}>
+                Create
+              </Button>
+            </div>
+          </div>
+        </Dialog>
+      </div>
     );
   }
 }
