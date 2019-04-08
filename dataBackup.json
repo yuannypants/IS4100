@@ -18,7 +18,7 @@
     {
       "id": 2,
       "username": "minion1",
-      "nickname": "John Doe",
+      "nickname": "Goh Zhiwei",
       "password": "password",
       "userType": "developer",
       "wageRate": 10,
@@ -33,7 +33,52 @@
     {
       "id": 3,
       "username": "minion2",
-      "nickname": "Jane Doe",
+      "nickname": "Huang Jifen",
+      "password": "password",
+      "userType": "developer",
+      "wageRate": 10,
+      "tags": [
+        { "id": "Python", "text": "Python" },
+        { "id": "Java", "text": "Java" },
+        { "id": "SQL", "text": "SQL" },
+        { "id": "English", "text": "English" },
+        { "id": "German", "text": "German" }
+      ]
+    },
+    {
+      "id": 4,
+      "username": "minion3",
+      "nickname": "Lim Li Xin",
+      "password": "password",
+      "userType": "developer",
+      "wageRate": 10,
+      "tags": [
+        { "id": "Python", "text": "Python" },
+        { "id": "Java", "text": "Java" },
+        { "id": "SQL", "text": "SQL" },
+        { "id": "English", "text": "English" },
+        { "id": "Managing", "text": "Managing" }
+      ]
+    },
+    {
+      "id": 5,
+      "username": "minion4",
+      "nickname": "Cindy Ng",
+      "password": "password",
+      "userType": "developer",
+      "wageRate": 10,
+      "tags": [
+        { "id": "Python", "text": "Python" },
+        { "id": "Java", "text": "Java" },
+        { "id": "SQL", "text": "SQL" },
+        { "id": "English", "text": "English" },
+        { "id": "German", "text": "German" }
+      ]
+    },
+    {
+      "id": 6,
+      "username": "minion5",
+      "nickname": "Zhang Yuanhao",
       "password": "password",
       "userType": "developer",
       "wageRate": 10,
@@ -68,8 +113,21 @@
               "cost": 400,
               "tags": [{ "id": "Python", "text": "Python" }, { "id": "SQL", "text": "SQL" }],
               "resources": [
-                {"id": 1, "hours": 20, "tags":  [{ "id": "Python", "text": "Python" }]},
-                {"id": 2, "hours": 20, "tags":  [{ "id": "SQL", "text": "SQL" }]}
+                {
+                  "id": 6,
+                  "username": "minion5",
+                  "nickname": "Zhang Yuanhao",
+                  "password": "password",
+                  "userType": "developer",
+                  "wageRate": 10,
+                  "tags": [
+                    { "id": "Python", "text": "Python" },
+                    { "id": "Java", "text": "Java" },
+                    { "id": "SQL", "text": "SQL" },
+                    { "id": "English", "text": "English" },
+                    { "id": "German", "text": "German" }
+                  ]
+                }
               ],
               "id": 1
             }
@@ -91,8 +149,21 @@
               "cost": 400,
               "tags": [{ "id": "Python", "text": "Python" }, { "id": "SQL", "text": "SQL" }],
               "resources": [
-                {"id": 1, "hours": 20, "tags":  [{ "id": "Python", "text": "Python" }]},
-                {"id": 2, "hours": 20, "tags":  [{ "id": "SQL", "text": "SQL" }]}
+                {
+                  "id": 6,
+                  "username": "minion5",
+                  "nickname": "Zhang Yuanhao",
+                  "password": "password",
+                  "userType": "developer",
+                  "wageRate": 10,
+                  "tags": [
+                    { "id": "Python", "text": "Python" },
+                    { "id": "Java", "text": "Java" },
+                    { "id": "SQL", "text": "SQL" },
+                    { "id": "English", "text": "English" },
+                    { "id": "German", "text": "German" }
+                  ]
+                }
               ],
               "id": 1
             }
@@ -114,8 +185,21 @@
               "cost": 400,
               "tags": [{ "id": "Python", "text": "Python" }, { "id": "SQL", "text": "SQL" }],
               "resources": [
-                {"id": 1, "hours": 20, "tags":  [{ "id": "Python", "text": "Python" }]},
-                {"id": 2, "hours": 20, "tags":  [{ "id": "SQL", "text": "SQL" }]}
+                {
+                  "id": 6,
+                  "username": "minion5",
+                  "nickname": "Zhang Yuanhao",
+                  "password": "password",
+                  "userType": "developer",
+                  "wageRate": 10,
+                  "tags": [
+                    { "id": "Python", "text": "Python" },
+                    { "id": "Java", "text": "Java" },
+                    { "id": "SQL", "text": "SQL" },
+                    { "id": "English", "text": "English" },
+                    { "id": "German", "text": "German" }
+                  ]
+                }
               ],
               "id": 1
             }
@@ -146,8 +230,21 @@
               "cost": 400,
               "tags": [{ "id": "Java", "text": "Java" }, { "id": "SQL", "text": "SQL" }],
               "resources": [
-                {"id": 1, "hours": 20, "tags":  [{ "id": "Java", "text": "Java" }]},
-                {"id": 2, "hours": 20, "tags":  [{ "id": "SQL", "text": "SQL" }]}
+                {
+                  "id": 6,
+                  "username": "minion5",
+                  "nickname": "Zhang Yuanhao",
+                  "password": "password",
+                  "userType": "developer",
+                  "wageRate": 10,
+                  "tags": [
+                    { "id": "Python", "text": "Python" },
+                    { "id": "Java", "text": "Java" },
+                    { "id": "SQL", "text": "SQL" },
+                    { "id": "English", "text": "English" },
+                    { "id": "German", "text": "German" }
+                  ]
+                }
               ],
               "id": 1
             }
@@ -169,8 +266,21 @@
               "cost": 400,
               "tags": [{ "id": "Java", "text": "Java" }, { "id": "SQL", "text": "SQL" }],
               "resources": [
-                {"id": 1, "hours": 20, "tags":  [{ "id": "Java", "text": "Java" }]},
-                {"id": 2, "hours": 20, "tags":  [{ "id": "SQL", "text": "SQL" }]}
+                {
+                  "id": 6,
+                  "username": "minion5",
+                  "nickname": "Zhang Yuanhao",
+                  "password": "password",
+                  "userType": "developer",
+                  "wageRate": 10,
+                  "tags": [
+                    { "id": "Python", "text": "Python" },
+                    { "id": "Java", "text": "Java" },
+                    { "id": "SQL", "text": "SQL" },
+                    { "id": "English", "text": "English" },
+                    { "id": "German", "text": "German" }
+                  ]
+                }
               ],
               "id": 1
             }
@@ -192,8 +302,21 @@
               "cost": 400,
               "tags": [{ "id": "Java", "text": "Java" }, { "id": "SQL", "text": "SQL" }],
               "resources": [
-                {"id": 1, "hours": 20, "tags":  [{ "id": "Java", "text": "Java" }]},
-                {"id": 2, "hours": 20, "tags":  [{ "id": "SQL", "text": "SQL" }]}
+                {
+                  "id": 6,
+                  "username": "minion5",
+                  "nickname": "Zhang Yuanhao",
+                  "password": "password",
+                  "userType": "developer",
+                  "wageRate": 10,
+                  "tags": [
+                    { "id": "Python", "text": "Python" },
+                    { "id": "Java", "text": "Java" },
+                    { "id": "SQL", "text": "SQL" },
+                    { "id": "English", "text": "English" },
+                    { "id": "German", "text": "German" }
+                  ]
+                }
               ],
               "id": 1
             }

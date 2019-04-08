@@ -1,21 +1,30 @@
+import { Dialog } from 'primereact/dialog'
 import { InputText } from 'primereact/inputtext'
+import { PickList } from 'primereact/picklist'
 import React, {Component} from 'react';
 import Helmet from 'react-helmet';
 import Bootstrap from 'bootstrap/dist/css/bootstrap.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as fa from "@fortawesome/free-solid-svg-icons";
 import {Row, Col, Button, Container, InputGroup, FormControl } from 'react-bootstrap';
+import { WithContext as ReactTags } from 'react-tag-input'
 import { httpGET, httpPOST, httpUPDATE } from '../utils/httpUtils'
 import moment from 'moment';
 
 const ls = window.localStorage;
+
+const KeyCodes = {
+  comma: 188,
+  enter: 13,
+};
+
+const delimiters = [KeyCodes.comma, KeyCodes.enter];
 
 export default class EditSprint extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      // TODO
       currentProjectData: {},
       sprintsList: [],
       currentSprintData: {},
@@ -24,7 +33,21 @@ export default class EditSprint extends Component {
       sprintName: "",
       sprintDescription: "",
       sprintStartDateTime: moment().format("L"),
-      sprintDuration: "0"
+      sprintDuration: "0",
+
+      dialogVisible: false,
+
+      taskId: null,
+      taskName: "",
+      taskDescription: "",
+      taskStartDateTime: moment().format("L"),
+      taskDuration: "0",
+      taskTags: [],
+      taskResources: [],
+
+      usersList: [],
+      srcUsersList: [],
+      dstUsersList: [],
     }
 
     this.generateTasksView = this.generateTasksView.bind(this);
@@ -33,6 +56,9 @@ export default class EditSprint extends Component {
     this.onClickDeleteTask = this.onClickDeleteTask.bind(this);
     this.onClickAddNewTask = this.onClickAddNewTask.bind(this);
     this.onClickEditTask = this.onClickEditTask.bind(this);
+    this.onClickSaveTask = this.onClickSaveTask.bind(this);
+    this.usersTemplate = this.usersTemplate.bind(this);
+    this.onPickListChange = this.onPickListChange.bind(this);
 
   }
 
@@ -66,6 +92,17 @@ export default class EditSprint extends Component {
         console.log(err);
         this.setState({error: 'An error with the server was encountered.'})
       });
+
+      httpGET('http://localhost:3001/users')
+      .then(response => {
+        console.log(response.data);
+        this.setState({usersList: response.data});
+
+      })
+       .catch(err => {
+        console.log(err);
+        this.setState({error: 'An error with the server was encountered.'})
+      });
     } else {
       window.location = "Projects"
     }
@@ -90,7 +127,7 @@ export default class EditSprint extends Component {
             $ { task.cost }
           </div>
           <div className="p-col-2">
-            <Button onClick={() => this.onClickEditTask()} variant='warning' style={{marginRight: '5px'}}>
+            <Button onClick={() => this.onClickEditTask(task.id)} variant='warning' style={{marginRight: '5px'}}>
               <FontAwesomeIcon icon={fa.faEdit} />
             </Button>
 
@@ -220,14 +257,103 @@ export default class EditSprint extends Component {
   }
 
   onClickAddNewTask() {
+    this.setState({
+      dialogVisible: true,
 
+      taskId: null,
+      taskName: "",
+      taskDescription: "",
+      taskStartDateTime: moment().format("L"),
+      taskDuration: "0",
+      srcUsersList: this.state.usersList,
+      dstUsersList: []
+    });
   }
 
   onClickEditTask(taskId) {
+    let index = this.state.tasksList.findIndex(element => parseInt(element.id,10) === parseInt(taskId));
+    let taskInfo = this.state.tasksList[index];
+    let expectedDuration = moment(taskInfo.endDateTime).diff(moment(taskInfo.startDateTime), "days");
 
+    this.setState({
+      dialogVisible: true,
+
+      taskId: taskId,
+      taskName: taskInfo.name,
+      taskDescription: taskInfo.description,
+      taskStartDateTime: moment(taskInfo.startDateTime).format("L"),
+      taskDuration: expectedDuration,
+      srcUsersList: this.state.usersList,
+      dstUsersList: []
+    });
   }
 
-  // Displays the HTML to the user
+  onClickSaveTask() {
+    if (confirm("Confirm to save task?")) {
+      let currentProjectId = ls.getItem("currentProjectId");
+      let newTasksList = this.state.tasksList;
+
+      if (this.state.taskId) { // Save
+
+      } else { // Add
+        newTasksList.push({
+          name: this.state.taskName,
+          description: this.state.taskDescription,
+          startDateTime: moment(this.state.taskStartDateTime).startOf('day').format(),
+          endDateTime: moment(this.state.taskStartDateTime).add(parseInt(this.state.taskDuration,10),'days').format(),
+          cost: parseInt(this.state.taskDuration,10) * 80,
+          tags: [],
+          resources: this.state.dstUsersList,
+          id: this.state.tasksList.length + 1
+        })
+      }
+
+      let newSprintData = this.state.currentSprintData;
+      let newProjectData = this.state.currentProjectData;
+
+      newSprintData.tasks = newTasksList;
+
+      let index = newProjectData.sprints.findIndex(element => parseInt(element.id,10) === parseInt(newSprintData.id));
+
+      newProjectData.sprints[index] = newSprintData;
+
+      httpUPDATE('http://localhost:3001/projects/' + currentProjectId, newProjectData)
+      .then(response => {
+        console.log(response.data);
+        this.setState({tasksList: newTasksList, currentSprintData: newSprintData, currentProjectData: newProjectData})
+      })
+       .catch(err => {
+        console.log(err);
+        this.setState({error: 'An error with the server was encountered.'})
+      });
+    }
+  }
+
+  onPickListChange(event) {
+    this.setState({
+      srcUsersList: event.source,
+      dstUsersList: event.target
+    });
+  }
+
+  usersTemplate(user) {
+    return (
+      <div className="p-clearfix" style={{fontSize: '14px',margin: '2px 5px 0 0'}}>
+        <p>
+          <b>Name:</b> {user.nickname}
+        </p>
+        <p>
+          <b>Hourly Rate:</b> ${user.wageRate}.00
+        </p>
+        <ReactTags
+          tags={user.tags}
+          delimiters={delimiters}
+          readOnly={true}
+        />
+      </div>
+    );
+  }
+
   render() {
     return (
       <div className="p-grid">
@@ -235,6 +361,7 @@ export default class EditSprint extends Component {
           <title>Add/Edit Sprint</title>
           <meta name="description" content="Add/Edit Sprint" />
         </Helmet>
+
         <div className="p-col-10 p-offset-1">
           <div className="card card-w-title">
             <div className="p-grid">
@@ -255,13 +382,66 @@ export default class EditSprint extends Component {
               <div className="p-col-12"><hr/></div>
               <div className="p-col-12">
               {
-                // TODO
                 this.state.tasksList && this.generateTasksView()
               }
               </div>
             </div>
           </div>
         </div>
+
+        <Dialog header="Edit Task" visible={this.state.dialogVisible} modal={true} onHide={(e) => this.setState({dialogVisible: false})}>
+          <div className="p-grid">
+
+            <div className="p-col-4">
+              <b>Task Name</b>
+            </div>
+            <div className="p-col-8">
+              <InputText style={{width: '100%'}} value={this.state.taskName} onChange={(e) => this.setState({taskName: e.target.value})} />
+            </div>
+
+            <div className="p-col-4">
+              <b>Task Description</b>
+            </div>
+            <div className="p-col-8">
+              <InputText style={{width: '100%'}} value={this.state.taskDescription} onChange={(e) => this.setState({taskDescription: e.target.value})} />
+            </div>
+
+            <div className="p-col-4">
+              <b>Start Date</b>
+            </div>
+            <div className="p-col-8">
+              <InputText style={{width: '100%'}} value={this.state.taskStartDateTime} onChange={(e) => this.setState({taskStartDateTime: e.target.value})} />
+            </div>
+
+            <div className="p-col-4">
+              <b>Duration (days)</b>
+            </div>
+            <div className="p-col-8">
+              <InputText style={{width: '100%'}} value={this.state.taskDuration} onChange={(e) => this.setState({taskDuration: e.target.value})} />
+            </div>
+
+            <div className="p-col-12">
+              <PickList
+                source={this.state.srcUsersList}
+                target={this.state.dstUsersList}
+                itemTemplate={this.usersTemplate}
+                sourceHeader="Available Resources"
+                targetHeader="Selected Resources"
+                responsive={true}
+                sourceStyle={{height: '300px'}}
+                targetStyle={{height: '300px'}}
+                onChange={this.onPickListChange}>
+
+              </PickList>
+            </div>
+
+            <div className="p-col-2 p-offset-5">
+              <Button style={{width: '100%'}} onClick={() => this.onClickSaveTask()}>
+                Save
+              </Button>
+            </div>
+          </div>
+        </Dialog>
       </div>
     );
   }
