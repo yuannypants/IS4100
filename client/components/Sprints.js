@@ -29,7 +29,7 @@ export default class Sprints extends Component {
     this.generateSprintsView = this.generateSprintsView.bind(this);
     this.onClickDeleteSprint = this.onClickDeleteSprint.bind(this);
     this.onClickAddNewSprint = this.onClickAddNewSprint.bind(this);
-    this.onClickViewPastStatistics = this.onClickViewPastStatistics.bind(this);
+    this.onClickViewIndustryStatistics = this.onClickViewIndustryStatistics.bind(this);
     this.onClickEditSprint = this.onClickEditSprint.bind(this);
   }
 
@@ -118,7 +118,7 @@ export default class Sprints extends Component {
     }
   }
 
-  onClickViewPastStatistics() {
+  onClickViewIndustryStatistics() {
     window.location = "SprintStatistics"
   }
 
@@ -166,8 +166,8 @@ export default class Sprints extends Component {
                 </Button>
               </div>
               <div className="p-col-2">
-                <Button onClick={() => this.onClickViewPastStatistics()} variant='info' style={{width: '100%'}}>
-                  <FontAwesomeIcon icon={fa.faPlus} /> &nbsp;Past Statistics
+                <Button onClick={() => this.onClickViewIndustryStatistics()} variant='info' style={{width: '100%'}}>
+                  <FontAwesomeIcon icon={fa.faPlus} /> &nbsp;Industry Statistics
                 </Button>
               </div>
               <div className="p-col-2 p-offset-6">

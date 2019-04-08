@@ -1,3 +1,4 @@
+import { InputText } from 'primereact/inputtext'
 import React, {Component} from 'react';
 import Helmet from 'react-helmet';
 import Bootstrap from 'bootstrap/dist/css/bootstrap.css';
@@ -18,7 +19,12 @@ export default class EditSprint extends Component {
       currentProjectData: {},
       sprintsList: [],
       currentSprintData: {},
-      tasksList: []
+      tasksList: [],
+
+      sprintName: "",
+      sprintDescription: "",
+      sprintStartDateTime: moment().format("L"),
+      sprintDuration: "0"
     }
 
     this.generateTasksView = this.generateTasksView.bind(this);
@@ -36,29 +42,22 @@ export default class EditSprint extends Component {
     if (currentProjectId !== null) {
       httpGET('http://localhost:3001/projects?id=' + currentProjectId)
       .then(response => {
-        // console.log(response.data);
+        console.log(response.data);
         let retrievedProject = response.data[0];
 
         if (currentSprintId !== null) {
+          let currentSprintData = retrievedProject.sprints.filter(sprint => {return sprint.id === currentSprintId})[0];
           this.setState({
             currentProjectData: retrievedProject,
             sprintsList: retrievedProject.sprints,
-            currentSprintData: retrievedProject.sprints.filter(sprint => {return sprint.id === currentSprintId})[0],
-            tasksList: retrievedProject.sprints.filter(sprint => {return sprint.id === currentSprintId})[0].tasks
-          })
-        } else {
-          this.setState({
-            currentProjectData: retrievedProject,
-            sprintsList: retrievedProject.sprints,
-            currentSprintData: {
-              name: "",
-              description: "",
-              startDateTime: moment().format(),
-              endDateTime: moment().format(),
-              cost: 0,
-              tasks: [],
-            },
-            tasksList: []
+            currentSprintData: currentSprintData,
+            tasksList: retrievedProject.sprints.filter(sprint => {return sprint.id === currentSprintId})[0].tasks,
+
+
+            sprintName: currentSprintData.name,
+            sprintDescription: currentSprintData.description,
+            sprintStartDateTime: moment(currentSprintData.startDateTime).format("L"),
+            sprintDuration: moment(currentSprintData.endDateTime).diff(moment(currentSprintData.startDateTime), "days")
           })
         }
       })
@@ -109,41 +108,32 @@ export default class EditSprint extends Component {
     return (
       currentSprintData && (
         <div className="p-grid">
-          <div className="p-col-6">
-            <InputGroup className="mb-3">
-              <InputGroup.Prepend>
-              <InputGroup.Text id="sprint_name">Sprint Name</InputGroup.Text>
-              </InputGroup.Prepend>
-              <FormControl placeholder="Name of sprint" aria-label="Sprint name" aria-describedby="sprint_name" value={ currentSprintData.name } />
-            </InputGroup>
+          <div className="p-col-2">
+            <b>Sprint Name</b>
           </div>
-          <div className="p-col-6"> </div>
-
-          <div className="p-col-6">
-            <InputGroup className="mb-3">
-              <InputGroup.Prepend>
-              <InputGroup.Text id="sprint_startDateTime">Start Date</InputGroup.Text>
-              </InputGroup.Prepend>
-              <FormControl placeholder="Sprint Due Date" aria-label="Sprint due date" aria-describedby="sprint_startDateTime" value={ moment(currentSprintData.startDateTime).format('L') } />
-            </InputGroup>
+          <div className="p-col-4">
+            <InputText style={{width: '100%'}} value={this.state.sprintName} onChange={(e) => this.setState({sprintName: e.target.value})} />
           </div>
-          <div className="p-col-6"> </div>
-
-          <div className="p-col-5">
-            <InputGroup className="mb-3">
-              <InputGroup.Prepend>
-              <InputGroup.Text id="sprint_cost">Baseline Budget</InputGroup.Text>
-              </InputGroup.Prepend>
-              <FormControl placeholder="Baseline Sprint Budget ($)" aria-label="Baseline sprint cost" aria-describedby="sprint_cost" value={ currentSprintData.cost }/>
-            </InputGroup>
+          <div className="p-col-2">
+            <b>Sprint Description</b>
           </div>
-          <div className="p-col-3">
-            <Button variant='info'>
-              Suggest Budget &nbsp;
-            </Button>
+          <div className="p-col-4">
+            <InputText style={{width: '100%'}} value={this.state.sprintDescription} onChange={(e) => this.setState({sprintDescription: e.target.value})} />
+          </div>
+          <div className="p-col-2">
+            <b>Start Date</b>
+          </div>
+          <div className="p-col-4">
+            <InputText style={{width: '100%'}} value={this.state.sprintStartDateTime} onChange={(e) => this.setState({sprintStartDateTime: e.target.value})} />
+          </div>
+          <div className="p-col-2">
+            <b>Duration (days)</b>
+          </div>
+          <div className="p-col-4">
+            <InputText style={{width: '100%'}} value={this.state.sprintDuration} onChange={(e) => this.setState({sprintDuration: e.target.value})} />
           </div>
 
-          <div className="p-col-4" style={{ fontSize: '18px'}}>
+          <div className="p-col-3" style={{ fontSize: '18px'}}>
             <b> Expected Total Cost: </b> $
             {
               this.state.tasksList ?
@@ -151,25 +141,25 @@ export default class EditSprint extends Component {
             }
           </div>
 
-          <div className="p-col-5">
-            <InputGroup className="mb-3">
-              <InputGroup.Prepend>
-              <InputGroup.Text id="sprint_endDateTime">Baseline Duration</InputGroup.Text>
-              </InputGroup.Prepend>
-              <FormControl placeholder="Baseline Sprint Duration (hrs)" aria-label="Baseline sprint duration" aria-describedby="sprint_endDateTime" value={ moment(currentSprintData.endDateTime).format('L') } />
-            </InputGroup>
-          </div>
           <div className="p-col-3">
             <Button variant='info'>
-              Suggest Duration
+              View Suggested Budget &nbsp;
             </Button>
           </div>
-          <div className="p-col-4" style={{ 'fontSize': '18px'}}>
+          <div className="p-col-6"> </div>
+
+          <div className="p-col-3" style={{ 'fontSize': '18px'}}>
             <b> Expected Total Duration: </b>
             {
               this.state.tasksList &&
-                this.state.tasksList.reduce((cumulativeCost, task) => {return cumulativeCost + moment(task.endDateTime).diff(moment(task.startDateTime), "days")}, 0)
+              this.state.tasksList.reduce((cumulativeCost, task) => {return cumulativeCost + moment(task.endDateTime).diff(moment(task.startDateTime), "days")}, 0)
             } Days
+          </div>
+
+          <div className="p-col-3">
+            <Button variant='info'>
+              View Suggested Duration
+            </Button>
           </div>
         </div>
       )
@@ -220,29 +210,28 @@ export default class EditSprint extends Component {
         <div className="p-col-10 p-offset-1">
           <div className="card card-w-title">
             <div className="p-grid">
-              <div className="p-col-8" style={{ textAlign: 'center'}}>
-                <p style={{fontSize: "24px", fontWeight: 600}}>Tasks{ " in " + ls.getItem("currentSprintName") + " for "+ ls.getItem("currentProjectName")}</p>
-              </div>
-              <div className="p-col-2">
+              <h1>Tasks{ " in " + ls.getItem("currentSprintName") + " for "+ ls.getItem("currentProjectName")}</h1>
+              {
+                this.generateSprintDetails()
+              }
+              <div className="p-col-1 p-offset-10">
                 <Button onClick={() => this.onClickAddNewTask()} style={{marginRight: '5px'}}>
-                  <FontAwesomeIcon icon={fa.faPlus} /> &nbsp; New Task
+                  <FontAwesomeIcon icon={fa.faPlus} /> &nbsp;New Task
                 </Button>
               </div>
-              <div className="p-col-2">
+              <div className="p-col-1">
                 <Button onClick={() => this.onClickEditTask()} variant='info' style={{marginRight: '5px'}}>
                   Update Sprint
                 </Button>
               </div>
+              <div className="p-col-12"><hr/></div>
+              <div className="p-col-12">
+              {
+                // TODO
+                this.state.tasksList && this.generateTasksView()
+              }
+              </div>
             </div>
-            <hr/>
-            {
-              this.generateSprintDetails()
-            }
-            <hr/>
-            {
-              // TODO
-              this.state.tasksList && this.generateTasksView()
-            }
           </div>
         </div>
       </div>
