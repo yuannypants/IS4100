@@ -29,6 +29,7 @@ export default class EditSprint extends Component {
 
     this.generateTasksView = this.generateTasksView.bind(this);
     this.generateSprintDetails = this.generateSprintDetails.bind(this);
+    this.onClickEditSprint = this.onClickEditSprint.bind(this);
     this.onClickDeleteTask = this.onClickDeleteTask.bind(this);
     this.onClickAddNewTask = this.onClickAddNewTask.bind(this);
     this.onClickEditTask = this.onClickEditTask.bind(this);
@@ -191,6 +192,33 @@ export default class EditSprint extends Component {
     }
   }
 
+  onClickEditSprint() {
+    if (confirm("Are you sure you want to edit this sprint?")) {
+      let currentProjectId = ls.getItem("currentProjectId");
+      let newSprintData = this.state.currentSprintData;
+      let newProjectData = this.state.currentProjectData;
+
+      newSprintData.name = this.state.sprintName;
+      newSprintData.description = this.state.sprintDescription;
+      newSprintData.startDateTime = moment(this.state.sprintStartDateTime).startOf('day').format();
+      newSprintData.endDateTime = moment(this.state.sprintStartDateTime).add(parseInt(this.state.sprintDuration,10),'days').format();
+
+      let index = newProjectData.sprints.findIndex(element => parseInt(element.id,10) === parseInt(newSprintData.id));
+
+      newProjectData.sprints[index] = newSprintData;
+
+      httpUPDATE('http://localhost:3001/projects/' + currentProjectId, newProjectData)
+      .then(response => {
+        console.log(response.data);
+        this.setState({currentSprintData: newSprintData, currentProjectData: newProjectData})
+      })
+       .catch(err => {
+        console.log(err);
+        this.setState({error: 'An error with the server was encountered.'})
+      });
+    }
+  }
+
   onClickAddNewTask() {
 
   }
@@ -220,7 +248,7 @@ export default class EditSprint extends Component {
                 </Button>
               </div>
               <div className="p-col-1">
-                <Button onClick={() => this.onClickEditTask()} variant='info' style={{marginRight: '5px'}}>
+                <Button onClick={() => this.onClickEditSprint()} variant='info' style={{marginRight: '5px'}}>
                   Update Sprint
                 </Button>
               </div>
