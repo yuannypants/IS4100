@@ -125,7 +125,7 @@ export default class Sprints extends Component {
   onClickEditSprint(sprintId, sprintName) {
     ls.setItem("currentSprintId",sprintId)
     ls.setItem("currentSprintName", sprintName);
-    window.location = "AddEditSprint"
+    window.location = "EditSprint"
   }
 
   onClickDeleteSprint(sprintId) {

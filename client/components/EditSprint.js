@@ -9,7 +9,7 @@ import moment from 'moment';
 
 const ls = window.localStorage;
 
-export default class AddEditSprint extends Component {
+export default class EditSprint extends Component {
   constructor(props) {
     super(props);
 

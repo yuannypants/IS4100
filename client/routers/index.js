@@ -16,7 +16,7 @@ import Page from '../components/Page';
 import Settings from '../components/Settings';
 import Projects from '../components/Projects';
 import Sprints from '../components/Sprints';
-import AddEditSprint from '../components/AddEditSprint';
+import EditSprint from '../components/EditSprint';
 import Task from '../components/Task';
 import Tasks from '../components/Tasks';
 import ResourceManagement from '../components/ResourceManagement';
@@ -44,7 +44,7 @@ const RootClientRouter = () => (
       <AuthenticatedRoute exact path="/Projects" component={Projects}/>
       <AuthenticatedRoute exact path="/Sprints" component={Sprints}/>
       <AuthenticatedRoute exact path="/Tasks" component={Tasks}/>
-      <AuthenticatedRoute exact path="/AddEditSprint" component={AddEditSprint}/>
+      <AuthenticatedRoute exact path="/EditSprint" component={EditSprint}/>
       <AuthenticatedRoute exact path="/ResourceManagement" component={ResourceManagement}/>
       <AuthenticatedRoute path="" component={HomePage}/>
       <AuthenticatedRoute component={NotFound}/>
