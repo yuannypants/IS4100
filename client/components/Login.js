@@ -32,7 +32,7 @@ export default class Login extends Component {
         ls.setItem('username', response.data[0].username);
         ls.setItem('nickname', response.data[0].nickname);
         ls.setItem('userType', response.data[0].userType);
-        ls.setItem('userData', response.data[0]);
+        ls.setItem('userData', JSON.stringify(response.data[0]));
         if (ls.getItem('userType') === "manager")
           window.location.href = '/Projects'; // PM main page
         else

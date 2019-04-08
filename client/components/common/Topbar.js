@@ -17,7 +17,6 @@ export class Topbar extends Component {
   render() {
     return (
       <div className="layout-topbar clearfix" >
-	      <Container>
         {
           localStorage.getItem("username") && (
             <button className="p-link layout-menu-button" onClick={this.props.onToggleMenu}>
@@ -54,7 +53,6 @@ export class Topbar extends Component {
             )
           }
           </div>
-		    </Container>
       </div>
     );
   }
