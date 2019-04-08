@@ -119,7 +119,7 @@ export default class Sprints extends Component {
   }
 
   onClickViewIndustryStatistics() {
-    window.location = "SprintStatistics"
+    window.location = "IndustryStats"
   }
 
   onClickEditSprint(sprintId, sprintName) {

@@ -35,7 +35,7 @@ export default class Page extends Component {
 
   render() {
     return (
-      <Container>
+      <div className="p-grid">
         <Helmet>
           <title>Page</title>
           <meta name="description" content="Page" />
@@ -48,7 +48,7 @@ export default class Page extends Component {
             }
           </div>
         </div>
-      </Container>
+      </div>
     );
   }
 }

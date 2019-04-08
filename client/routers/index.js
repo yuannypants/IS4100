@@ -20,6 +20,7 @@ import EditSprint from '../components/EditSprint';
 import Task from '../components/Task';
 import Tasks from '../components/Tasks';
 import ResourceManagement from '../components/ResourceManagement';
+import IndustryStats from '../components/IndustryStats';
 import Resource from '../components/Resource';
 
 
@@ -46,6 +47,7 @@ const RootClientRouter = () => (
       <AuthenticatedRoute exact path="/Tasks" component={Tasks}/>
       <AuthenticatedRoute exact path="/EditSprint" component={EditSprint}/>
       <AuthenticatedRoute exact path="/ResourceManagement" component={ResourceManagement}/>
+      <AuthenticatedRoute exact path="/IndustryStats" component={IndustryStats}/>
       <AuthenticatedRoute path="" component={HomePage}/>
       <AuthenticatedRoute component={NotFound}/>
 
