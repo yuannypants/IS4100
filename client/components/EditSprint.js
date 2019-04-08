@@ -5,10 +5,21 @@ import Bootstrap from 'bootstrap/dist/css/bootstrap.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as fa from "@fortawesome/free-solid-svg-icons";
 import {Row, Col, Button, Container, InputGroup, FormControl } from 'react-bootstrap';
-import { httpGET, httpPOST, httpUPDATE } from '../utils/httpUtils'
+import { httpGET, httpPOST, httpUPDATE } from '../utils/httpUtils';
+import { WithContext as ReactTags } from 'react-tag-input';
 import moment from 'moment';
+import './Tags.css';
 
 const ls = window.localStorage;
+
+
+const KeyCodes = {
+  comma: 188,
+  enter: 13,
+};
+ 
+const delimiters = [KeyCodes.comma, KeyCodes.enter];
+
 
 export default class EditSprint extends Component {
   constructor(props) {
@@ -24,16 +35,45 @@ export default class EditSprint extends Component {
       sprintName: "",
       sprintDescription: "",
       sprintStartDateTime: moment().format("L"),
-      sprintDuration: "0"
+      sprintDuration: "0",
+      tags: [
+        { id: 'React', text: 'React' },
+				{ id: 'Scripting', text: 'Scripting' }
+      ]
     }
 
-    this.generateTasksView = this.generateTasksView.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+		this.handleAddition = this.handleAddition.bind(this);
+		this.handleDrag = this.handleDrag.bind(this);
+		this.generateTasksView = this.generateTasksView.bind(this);
     this.generateSprintDetails = this.generateSprintDetails.bind(this);
     this.onClickEditSprint = this.onClickEditSprint.bind(this);
     this.onClickDeleteTask = this.onClickDeleteTask.bind(this);
     this.onClickAddNewTask = this.onClickAddNewTask.bind(this);
     this.onClickEditTask = this.onClickEditTask.bind(this);
 
+  }
+
+  handleDelete(i) {
+		const { tags } = this.state;
+		this.setState({
+		 tags: tags.filter((tag, index) => index !== i),
+		});
+  }
+
+  handleAddition(tag) {
+		this.setState(state => ({ tags: [...state.tags, tag] }));
+  }
+
+  handleDrag(tag, currPos, newPos) {
+		const tags = [...this.state.tags];
+		const newTags = tags.slice();
+
+		newTags.splice(currPos, 1);
+		newTags.splice(newPos, 0, tag);
+
+		// re-render
+		this.setState({ tags: newTags });
   }
 
   componentWillMount () {
@@ -72,22 +112,35 @@ export default class EditSprint extends Component {
   }
 
   generateTasksView() {
+    const { tags, suggestions } = this.state;
     return this.state.tasksList.map(task => {
       let expectedDuration = moment(task.endDateTime).diff(moment(task.startDateTime), "days");
       return (
         <div className="p-grid" key={task.id}>
           <hr/>
-          <div className="p-col-4">
+          <div className="p-col-3">
             <b>{ task.name } </b> <br/>
             <i>{ task.description }</i>
           </div>
-          <div className="p-col-3">
+          <div className="p-col-2">
             <b>Expected Duration</b> <br/>
             { expectedDuration } Days
           </div>
-          <div className="p-col-3">
+          <div className="p-col-2">
             <b>Expected Costs</b> <br/>
             $ { task.cost }
+          </div>
+
+          <div className='p-col-3'>
+                <b> Tags </b> <br/>
+                <ReactTags
+									tags={tags}
+									suggestions={suggestions}
+									handleDelete={this.handleDelete}
+									handleAddition={this.handleAddition}
+									handleDrag={this.handleDrag}
+                  delimiters={delimiters}
+                  readOnly={true} />
           </div>
           <div className="p-col-2">
             <Button onClick={() => this.onClickEditTask()} variant='warning' style={{marginRight: '5px'}}>
