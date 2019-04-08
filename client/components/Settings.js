@@ -94,7 +94,6 @@ export default class Settings extends Component {
   	let userData = ls.getItem("userData");
   	if (userData) {
 			userData = JSON.parse(userData);
-			if (userData.userType === "manager") { window.location = "Projects" }
 
 			console.log(userData);
 			this.setState({

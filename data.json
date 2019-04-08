@@ -5,7 +5,15 @@
       "username": "boss",
       "nickname": "John Smith",
       "password": "password",
-      "userType": "manager"
+      "userType": "manager",
+      "wageRate": 100,
+      "tags": [
+        { "id": "Python", "text": "Python" },
+        { "id": "Java", "text": "Java" },
+        { "id": "SQL", "text": "SQL" },
+        { "id": "English", "text": "English" },
+        { "id": "Malay", "text": "Malay" }
+      ]
     },
     {
       "id": 2,
@@ -19,7 +27,7 @@
         { "id": "Java", "text": "Java" },
         { "id": "SQL", "text": "SQL" },
         { "id": "English", "text": "English" },
-        { "id": "Malay", "text": "Malay" }
+        { "id": "Managing", "text": "Managing" }
       ]
     },
     {
