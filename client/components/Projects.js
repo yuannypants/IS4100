@@ -55,11 +55,7 @@ export default class Projects extends Component {
             <i>{ project.description }</i>
           </div>
           <div className="col-2">
-            <Button
-              className='btn btn-success'
-              onClick={() => this.onClickGoToProject(project.id, project.name)}
-            >
-              { /* Search for the icon on Font-Awesome website https://fontawesome.com/icons?d=gallery e.g. "door-open" becomes fa.faDoorOpen */ }
+            <Button className='btn btn-success' onClick={() => this.onClickGoToProject(project.id, project.name)} style={{width: '100%'}} >
               <FontAwesomeIcon icon={fa.faSignInAlt} /> &nbsp; Access Project
             </Button>
           </div>
@@ -110,11 +106,8 @@ export default class Projects extends Component {
           {
             this.state.projectsList && this.generateProjectView() // Make sure there are projects, then generate the view for it
           }
-          <div className="p-col-12">
-            <Button
-              className='btn btn-success'
-              onClick={() => this.setState({dialogVisible:true})}
-            >
+          <div className="p-col-2 p-offset-5">
+            <Button className='btn btn-success' onClick={() => this.setState({dialogVisible:true})} style={{width: '100%'}} >
               Add New Project
             </Button>
           </div>
@@ -123,7 +116,7 @@ export default class Projects extends Component {
         <Dialog header="Add New Project" visible={this.state.dialogVisible} modal={true} onHide={(e) => this.setState({dialogVisible: false})}>
           <div className="p-grid">
             <div className="p-col-4">
-              <b>Project Title</b>
+              <b>Project Name</b>
             </div>
             <div className="p-col-8">
               <InputText style={{width: '100%'}} value={this.state.projectName} onChange={(e) => this.setState({projectName: e.target.value})} />
