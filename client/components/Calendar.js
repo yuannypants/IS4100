@@ -18,6 +18,7 @@ export default class Calendar extends Component {
         events={this.props.events}
         startAccessor="start"
         endAccessor="end"
+        defaultView={this.props.showAgenda ? 'agenda' : 'month' }
       />
     )
   }

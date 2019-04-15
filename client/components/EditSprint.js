@@ -2,6 +2,7 @@ import { Dialog } from 'primereact/dialog'
 import { InputText } from 'primereact/inputtext'
 import { PickList } from 'primereact/picklist'
 import React, {Component} from 'react';
+import DateTime from 'react-datetime'
 import Helmet from 'react-helmet';
 import Bootstrap from 'bootstrap/dist/css/bootstrap.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -500,14 +501,15 @@ export default class EditSprint extends Component {
               <b>Start Date</b>
             </div>
             <div className="p-col-8">
-              <InputText style={{width: '100%'}} value={this.state.taskStartDateTime} onChange={(e) => this.setState({taskStartDateTime: e.target.value})} />
+              <DateTime style={{width: '100%'}} value={this.state.taskStartDateTime} onChange={moment => this.setState({taskStartDateTime: moment.format("L")})} />
+              {/*<InputText style={{width: '100%'}} value={this.state.taskStartDateTime} onChange={(e) => this.setState({taskStartDateTime: e.target.value})} />*/}
             </div>
 
             <div className="p-col-4">
               <b>Duration (days)</b>
             </div>
             <div className="p-col-8">
-              <InputText style={{width: '100%'}} value={this.state.taskDuration} onChange={(e) => this.setState({taskDuration: e.target.value})} />
+              <InputText style={{width: '100%'}} value={this.state.taskDuration} onChange={(e) => this.setState({taskDuration: e.target.value})} keyfilter="pint" />
             </div>
 
             <div className="p-col-12">

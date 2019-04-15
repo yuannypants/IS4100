@@ -8,6 +8,7 @@ import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
 import '../assets/css/layout.scss';
+import '../assets/css/dateTimePicker.css';
 import { Topbar } from '../components/common/Topbar';
 import { Footer } from '../components/common/Footer';
 import { InlineProfile } from '../components/common/InlineProfile';
@@ -117,8 +118,8 @@ class RootContainer extends Component {
     return (
       <div>
         <Helmet
-          titleTemplate="%s - IS4100"
-          defaultTitle="IS4100"
+          titleTemplate="%s - COCOMO"
+          defaultTitle="Welcome"
         >
           <meta name="description" content="IS4100" />
         </Helmet>

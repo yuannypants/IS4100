@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import DateTime from 'react-datetime';
 import { Button } from 'react-bootstrap';
 import Helmet from 'react-helmet';
 import { httpGET, httpUPDATE } from '../utils/httpUtils';
@@ -18,6 +19,8 @@ export default class Sprints extends Component {
     this.state = {
       currentProjectData: {},
       sprintsList: [],
+
+      events: [],
 
       dialogVisible: false,
       sprintName: "",
@@ -229,13 +232,14 @@ export default class Sprints extends Component {
               <b>Start Date</b>
             </div>
             <div className="p-col-8">
-              <InputText style={{width: '100%'}} value={this.state.sprintStartDateTime} onChange={(e) => this.setState({sprintStartDateTime: e.target.value})} />
+              <DateTime style={{width: '100%'}} value={this.state.sprintStartDateTime} onChange={moment => this.setState({sprintStartDateTime: moment.format("L")})} />
+              {/*<InputText style={{width: '100%'}} value={this.state.sprintStartDateTime} onChange={(e) => this.setState({sprintStartDateTime: e.target.value})} />*/}
             </div>
             <div className="p-col-4">
               <b>Duration (days)</b>
             </div>
             <div className="p-col-8">
-              <InputText style={{width: '100%'}} value={this.state.sprintDuration} onChange={(e) => this.setState({sprintDuration: e.target.value})} />
+              <InputText style={{width: '100%'}} value={this.state.sprintDuration} onChange={(e) => this.setState({sprintDuration: e.target.value})} keyfilter="pint" />
             </div>
             <div className="p-col-2 p-offset-5">
               <Button style={{width: '100%'}} onClick={() => this.onClickAddNewSprint()}>

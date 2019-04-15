@@ -11,8 +11,8 @@ export default class Page extends Component {
     super(props);
 
     this.state = {
-      chosenGraph: "cumulative",
-      chosenTag: "all"
+      chosenGraph: {label: "Cumulative", value: "cumulative"},
+      chosenTag: {label: "All", value: "all"}
     }
   }
 
@@ -229,7 +229,7 @@ export default class Page extends Component {
                   options={graphOptions}
                   onChange={(e) => {this.setState({chosenGraph: e.value})}}
                   placeholder="Select a graph"
-                  style={{width: '100%', paddingTop: '15px'}}
+                  style={{width: '100%'}}
                 />
               </div>
               <div className="p-col-3 p-offset-2">
@@ -239,21 +239,23 @@ export default class Page extends Component {
                   options={tagOptions}
                   onChange={e => {this.setState({chosenTag: e.value})}}
                   placeholder="Select a tag"
-                  style={{width: '100%', paddingTop: '15px'}}
+                  style={{width: '100%'}}
                 />
               </div>
               </div>
               <div className="p-col-12">
                 <p>We have made an analysis of your project costs and outlined it against our cloud database containing cost data from all our industry partners.</p>
-                <p>The chart below shows the cumulative costs for projects tagged with "Java", "Python" and "SQL".</p>
-                {(this.state.chosenGraph.value === "cumulative" && this.state.chosenTag.value === "all") && <Chart type="line" data={graphData[0]} />}
-                {(this.state.chosenGraph.value === "cumulative" && this.state.chosenTag.value === "java") && <Chart type="line" data={graphData[1]} />}
-                {(this.state.chosenGraph.value === "cumulative" && this.state.chosenTag.value === "python") && <Chart type="line" data={graphData[2]} />}
-                {(this.state.chosenGraph.value === "cumulative" && this.state.chosenTag.value === "sql") && <Chart type="line" data={graphData[3]} />}
-                {(this.state.chosenGraph.value === "periodic" && this.state.chosenTag.value === "all") && <Chart type="bar" data={graphData[4]} />}
-                {(this.state.chosenGraph.value === "periodic" && this.state.chosenTag.value === "java") && <Chart type="bar" data={graphData[5]} />}
-                {(this.state.chosenGraph.value === "periodic" && this.state.chosenTag.value === "python") && <Chart type="bar" data={graphData[6]} />}
-                {(this.state.chosenGraph.value === "periodic" && this.state.chosenTag.value === "sql") && <Chart type="bar" data={graphData[7]} />}
+                <p>The chart below shows the { this.state.chosenGraph.value } costs for projects tagged with "{ this.state.chosenTag.label }".</p>
+                {
+                  (this.state.chosenGraph.value === "cumulative" && this.state.chosenTag.value === "all") ? <Chart type="line" data={graphData[0]} /> :
+                  (this.state.chosenGraph.value === "cumulative" && this.state.chosenTag.value === "java") ? <Chart type="line" data={graphData[1]} /> :
+                  (this.state.chosenGraph.value === "cumulative" && this.state.chosenTag.value === "python") ? <Chart type="line" data={graphData[2]} /> :
+                  (this.state.chosenGraph.value === "cumulative" && this.state.chosenTag.value === "sql") ? <Chart type="line" data={graphData[3]} /> :
+                  (this.state.chosenGraph.value === "periodic" && this.state.chosenTag.value === "all") ? <Chart type="bar" data={graphData[4]} /> :
+                  (this.state.chosenGraph.value === "periodic" && this.state.chosenTag.value === "java") ? <Chart type="bar" data={graphData[5]} /> :
+                  (this.state.chosenGraph.value === "periodic" && this.state.chosenTag.value === "python") ? <Chart type="bar" data={graphData[6]} /> :
+                    <Chart type="bar" data={graphData[7]} />
+                  }
               </div>
           </div>
         </div>
