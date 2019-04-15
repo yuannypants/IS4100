@@ -3,16 +3,32 @@
     {
       "id": 1,
       "username": "boss",
-      "nickname": "Jungpil",
+      "nickname": "Robert Millard",
       "password": "password",
       "userType": "manager",
       "wageRate": 15,
+      "wageRate2": 20,
       "tags": [
-        { "id": "Python", "text": "Python" },
-        { "id": "Java", "text": "Java" },
-        { "id": "SQL", "text": "SQL" },
-        { "id": "English", "text": "English" },
-        { "id": "Project Management", "text": "Project Management" }
+        {
+          "id": "Python",
+          "text": "Python"
+        },
+        {
+          "id": "Java",
+          "text": "Java"
+        },
+        {
+          "id": "SQL",
+          "text": "SQL"
+        },
+        {
+          "id": "English",
+          "text": "English"
+        },
+        {
+          "id": "Project Management",
+          "text": "Project Management"
+        }
       ]
     },
     {
@@ -22,12 +38,28 @@
       "password": "password",
       "userType": "developer",
       "wageRate": 10,
+      "wageRate2": 15,
       "tags": [
-        { "id": "Python", "text": "Python" },
-        { "id": "Java", "text": "Java" },
-        { "id": "SQL", "text": "SQL" },
-        { "id": "English", "text": "English" },
-        { "id": "Managing", "text": "Managing" }
+        {
+          "id": "Python",
+          "text": "Python"
+        },
+        {
+          "id": "Java",
+          "text": "Java"
+        },
+        {
+          "id": "SQL",
+          "text": "SQL"
+        },
+        {
+          "id": "English",
+          "text": "English"
+        },
+        {
+          "id": "Managing",
+          "text": "Managing"
+        }
       ]
     },
     {
@@ -37,12 +69,28 @@
       "password": "password",
       "userType": "developer",
       "wageRate": 10,
+      "wageRate2": 15,
       "tags": [
-        { "id": "Python", "text": "Python" },
-        { "id": "Java", "text": "Java" },
-        { "id": "SQL", "text": "SQL" },
-        { "id": "English", "text": "English" },
-        { "id": "German", "text": "German" }
+        {
+          "id": "Python",
+          "text": "Python"
+        },
+        {
+          "id": "Java",
+          "text": "Java"
+        },
+        {
+          "id": "SQL",
+          "text": "SQL"
+        },
+        {
+          "id": "English",
+          "text": "English"
+        },
+        {
+          "id": "German",
+          "text": "German"
+        }
       ]
     },
     {
@@ -52,12 +100,28 @@
       "password": "password",
       "userType": "developer",
       "wageRate": 10,
+      "wageRate2": 15,
       "tags": [
-        { "id": "Python", "text": "Python" },
-        { "id": "Java", "text": "Java" },
-        { "id": "SQL", "text": "SQL" },
-        { "id": "English", "text": "English" },
-        { "id": "Managing", "text": "Managing" }
+        {
+          "id": "Python",
+          "text": "Python"
+        },
+        {
+          "id": "Java",
+          "text": "Java"
+        },
+        {
+          "id": "SQL",
+          "text": "SQL"
+        },
+        {
+          "id": "English",
+          "text": "English"
+        },
+        {
+          "id": "Managing",
+          "text": "Managing"
+        }
       ]
     },
     {
@@ -67,12 +131,28 @@
       "password": "password",
       "userType": "developer",
       "wageRate": 10,
+      "wageRate2": 15,
       "tags": [
-        { "id": "Python", "text": "Python" },
-        { "id": "Java", "text": "Java" },
-        { "id": "SQL", "text": "SQL" },
-        { "id": "English", "text": "English" },
-        { "id": "German", "text": "German" }
+        {
+          "id": "Python",
+          "text": "Python"
+        },
+        {
+          "id": "Java",
+          "text": "Java"
+        },
+        {
+          "id": "SQL",
+          "text": "SQL"
+        },
+        {
+          "id": "English",
+          "text": "English"
+        },
+        {
+          "id": "German",
+          "text": "German"
+        }
       ]
     },
     {
@@ -82,13 +162,39 @@
       "password": "password",
       "userType": "developer",
       "wageRate": 10,
+      "wageRate2": 15,
       "tags": [
-        { "id": "Python", "text": "Python" },
-        { "id": "Java", "text": "Java" },
-        { "id": "SQL", "text": "SQL" },
-        { "id": "English", "text": "English" },
-        { "id": "German", "text": "German" }
+        {
+          "id": "Python",
+          "text": "Python"
+        },
+        {
+          "id": "Java",
+          "text": "Java"
+        },
+        {
+          "id": "SQL",
+          "text": "SQL"
+        },
+        {
+          "id": "English",
+          "text": "English"
+        },
+        {
+          "id": "German",
+          "text": "German"
+        }
       ]
+    },
+    {
+      "username": "test",
+      "nickname": "test",
+      "password": "password",
+      "type": "developer",
+      "wageRate": 10,
+      "wageRate2": 15,
+      "tags": [],
+      "id": 7
     }
   ],
   "projects": [
@@ -111,7 +217,16 @@
               "startDateTime": "2019-03-04T00:00:00+08:00",
               "endDateTime": "2019-03-09T00:00:00+08:00",
               "cost": 400,
-              "tags": [{ "id": "Python", "text": "Python" }, { "id": "SQL", "text": "SQL" }],
+              "tags": [
+                {
+                  "id": "Python",
+                  "text": "Python"
+                },
+                {
+                  "id": "SQL",
+                  "text": "SQL"
+                }
+              ],
               "resources": [
                 {
                   "id": 6,
@@ -120,12 +235,28 @@
                   "password": "password",
                   "userType": "developer",
                   "wageRate": 10,
+                  "wageRate2": 15,
                   "tags": [
-                    { "id": "Python", "text": "Python" },
-                    { "id": "Java", "text": "Java" },
-                    { "id": "SQL", "text": "SQL" },
-                    { "id": "English", "text": "English" },
-                    { "id": "German", "text": "German" }
+                    {
+                      "id": "Python",
+                      "text": "Python"
+                    },
+                    {
+                      "id": "Java",
+                      "text": "Java"
+                    },
+                    {
+                      "id": "SQL",
+                      "text": "SQL"
+                    },
+                    {
+                      "id": "English",
+                      "text": "English"
+                    },
+                    {
+                      "id": "German",
+                      "text": "German"
+                    }
                   ]
                 }
               ],
@@ -147,7 +278,16 @@
               "startDateTime": "2019-03-18T00:00:00+08:00",
               "endDateTime": "2019-03-23T00:00:00+08:00",
               "cost": 400,
-              "tags": [{ "id": "Python", "text": "Python" }, { "id": "SQL", "text": "SQL" }],
+              "tags": [
+                {
+                  "id": "Python",
+                  "text": "Python"
+                },
+                {
+                  "id": "SQL",
+                  "text": "SQL"
+                }
+              ],
               "resources": [
                 {
                   "id": 6,
@@ -156,12 +296,28 @@
                   "password": "password",
                   "userType": "developer",
                   "wageRate": 10,
+                  "wageRate2": 15,
                   "tags": [
-                    { "id": "Python", "text": "Python" },
-                    { "id": "Java", "text": "Java" },
-                    { "id": "SQL", "text": "SQL" },
-                    { "id": "English", "text": "English" },
-                    { "id": "German", "text": "German" }
+                    {
+                      "id": "Python",
+                      "text": "Python"
+                    },
+                    {
+                      "id": "Java",
+                      "text": "Java"
+                    },
+                    {
+                      "id": "SQL",
+                      "text": "SQL"
+                    },
+                    {
+                      "id": "English",
+                      "text": "English"
+                    },
+                    {
+                      "id": "German",
+                      "text": "German"
+                    }
                   ]
                 }
               ],
@@ -183,7 +339,16 @@
               "startDateTime": "2019-04-01T00:00:00+08:00",
               "endDateTime": "2019-04-06T00:00:00+08:00",
               "cost": 400,
-              "tags": [{ "id": "Python", "text": "Python" }, { "id": "SQL", "text": "SQL" }],
+              "tags": [
+                {
+                  "id": "Python",
+                  "text": "Python"
+                },
+                {
+                  "id": "SQL",
+                  "text": "SQL"
+                }
+              ],
               "resources": [
                 {
                   "id": 6,
@@ -192,12 +357,28 @@
                   "password": "password",
                   "userType": "developer",
                   "wageRate": 10,
+                  "wageRate2": 15,
                   "tags": [
-                    { "id": "Python", "text": "Python" },
-                    { "id": "Java", "text": "Java" },
-                    { "id": "SQL", "text": "SQL" },
-                    { "id": "English", "text": "English" },
-                    { "id": "German", "text": "German" }
+                    {
+                      "id": "Python",
+                      "text": "Python"
+                    },
+                    {
+                      "id": "Java",
+                      "text": "Java"
+                    },
+                    {
+                      "id": "SQL",
+                      "text": "SQL"
+                    },
+                    {
+                      "id": "English",
+                      "text": "English"
+                    },
+                    {
+                      "id": "German",
+                      "text": "German"
+                    }
                   ]
                 }
               ],
@@ -228,7 +409,16 @@
               "startDateTime": "2019-03-11T00:00:00+08:00",
               "endDateTime": "2019-03-16T00:00:00+08:00",
               "cost": 400,
-              "tags": [{ "id": "Java", "text": "Java" }, { "id": "SQL", "text": "SQL" }],
+              "tags": [
+                {
+                  "id": "Java",
+                  "text": "Java"
+                },
+                {
+                  "id": "SQL",
+                  "text": "SQL"
+                }
+              ],
               "resources": [
                 {
                   "id": 6,
@@ -237,12 +427,28 @@
                   "password": "password",
                   "userType": "developer",
                   "wageRate": 10,
+                  "wageRate2": 15,
                   "tags": [
-                    { "id": "Python", "text": "Python" },
-                    { "id": "Java", "text": "Java" },
-                    { "id": "SQL", "text": "SQL" },
-                    { "id": "English", "text": "English" },
-                    { "id": "German", "text": "German" }
+                    {
+                      "id": "Python",
+                      "text": "Python"
+                    },
+                    {
+                      "id": "Java",
+                      "text": "Java"
+                    },
+                    {
+                      "id": "SQL",
+                      "text": "SQL"
+                    },
+                    {
+                      "id": "English",
+                      "text": "English"
+                    },
+                    {
+                      "id": "German",
+                      "text": "German"
+                    }
                   ]
                 }
               ],
@@ -264,7 +470,16 @@
               "startDateTime": "2019-25-30T00:00:00+08:00",
               "endDateTime": "2019-25-30T00:00:00+08:00",
               "cost": 400,
-              "tags": [{ "id": "Java", "text": "Java" }, { "id": "SQL", "text": "SQL" }],
+              "tags": [
+                {
+                  "id": "Java",
+                  "text": "Java"
+                },
+                {
+                  "id": "SQL",
+                  "text": "SQL"
+                }
+              ],
               "resources": [
                 {
                   "id": 6,
@@ -273,12 +488,28 @@
                   "password": "password",
                   "userType": "developer",
                   "wageRate": 10,
+                  "wageRate2": 15,
                   "tags": [
-                    { "id": "Python", "text": "Python" },
-                    { "id": "Java", "text": "Java" },
-                    { "id": "SQL", "text": "SQL" },
-                    { "id": "English", "text": "English" },
-                    { "id": "German", "text": "German" }
+                    {
+                      "id": "Python",
+                      "text": "Python"
+                    },
+                    {
+                      "id": "Java",
+                      "text": "Java"
+                    },
+                    {
+                      "id": "SQL",
+                      "text": "SQL"
+                    },
+                    {
+                      "id": "English",
+                      "text": "English"
+                    },
+                    {
+                      "id": "German",
+                      "text": "German"
+                    }
                   ]
                 }
               ],
@@ -300,7 +531,16 @@
               "startDateTime": "2019-04-15T00:00:00+08:00",
               "endDateTime": "2019-04-20T00:00:00+08:00",
               "cost": 400,
-              "tags": [{ "id": "Java", "text": "Java" }, { "id": "SQL", "text": "SQL" }],
+              "tags": [
+                {
+                  "id": "Java",
+                  "text": "Java"
+                },
+                {
+                  "id": "SQL",
+                  "text": "SQL"
+                }
+              ],
               "resources": [
                 {
                   "id": 6,
@@ -309,12 +549,28 @@
                   "password": "password",
                   "userType": "developer",
                   "wageRate": 10,
+                  "wageRate2": 15,
                   "tags": [
-                    { "id": "Python", "text": "Python" },
-                    { "id": "Java", "text": "Java" },
-                    { "id": "SQL", "text": "SQL" },
-                    { "id": "English", "text": "English" },
-                    { "id": "German", "text": "German" }
+                    {
+                      "id": "Python",
+                      "text": "Python"
+                    },
+                    {
+                      "id": "Java",
+                      "text": "Java"
+                    },
+                    {
+                      "id": "SQL",
+                      "text": "SQL"
+                    },
+                    {
+                      "id": "English",
+                      "text": "English"
+                    },
+                    {
+                      "id": "German",
+                      "text": "German"
+                    }
                   ]
                 }
               ],
@@ -330,69 +586,75 @@
   "calendar": [
     {
       "userId": 6,
+      "username": "Zhang Yuanhao",
       "projectId": 1,
       "projectName": "Data Analytics Project",
       "sprintId": 1,
       "sprintName": "Sprint #1",
       "taskId": 1,
       "taskName": "Task #1",
-      "startDateTime":"2019-03-04T00:00:00+08:00",
-      "endDateTime":"2019-03-09T00:00:00+08:00"
+      "startDateTime": "2019-03-04T00:00:00+08:00",
+      "endDateTime": "2019-03-09T00:00:00+08:00"
     },
     {
       "userId": 6,
+      "username": "Zhang Yuanhao",
       "projectId": 1,
       "projectName": "Data Analytics Project",
       "sprintId": 2,
       "sprintName": "Sprint #2",
       "taskId": 1,
       "taskName": "Task #1",
-      "startDateTime":"2019-03-18T00:00:00+08:00",
-      "endDateTime":"2019-03-23T00:00:00+08:00"
+      "startDateTime": "2019-03-18T00:00:00+08:00",
+      "endDateTime": "2019-03-23T00:00:00+08:00"
     },
     {
       "userId": 6,
+      "username": "Zhang Yuanhao",
       "projectId": 1,
       "projectName": "Data Analytics Project",
       "sprintId": 3,
       "sprintName": "Sprint #3",
       "taskId": 1,
       "taskName": "Task #1",
-      "startDateTime":"2019-04-01T00:00:00+08:00",
-      "endDateTime":"2019-04-06T00:00:00+08:00"
+      "startDateTime": "2019-04-01T00:00:00+08:00",
+      "endDateTime": "2019-04-06T00:00:00+08:00"
     },
     {
       "userId": 6,
+      "username": "Zhang Yuanhao",
       "projectId": 2,
       "projectName": "Enterprise Solutions for NUS Project",
       "sprintId": 1,
       "sprintName": "Sprint #1",
       "taskId": 1,
       "taskName": "Task #1",
-      "startDateTime":"2019-03-11T00:00:00+08:00",
-      "endDateTime":"2019-03-16T00:00:00+08:00"
+      "startDateTime": "2019-03-11T00:00:00+08:00",
+      "endDateTime": "2019-03-16T00:00:00+08:00"
     },
     {
       "userId": 6,
+      "username": "Zhang Yuanhao",
       "projectId": 2,
       "projectName": "Enterprise Solutions for NUS Project",
       "sprintId": 2,
       "sprintName": "Sprint #2",
       "taskId": 1,
       "taskName": "Task #1",
-      "startDateTime":"2019-03-25T00:00:00+08:00",
-      "endDateTime":"2019-03-30T00:00:00+08:00"
+      "startDateTime": "2019-03-25T00:00:00+08:00",
+      "endDateTime": "2019-03-30T00:00:00+08:00"
     },
     {
       "userId": 6,
+      "username": "Zhang Yuanhao",
       "projectId": 2,
       "projectName": "Enterprise Solutions for NUS Project",
       "sprintId": 3,
       "sprintName": "Sprint #3",
       "taskId": 1,
       "taskName": "Task #1",
-      "startDateTime":"2019-04-15T00:00:00+08:00",
-      "endDateTime":"2019-04-20T00:00:00+08:00"
+      "startDateTime": "2019-04-15T00:00:00+08:00",
+      "endDateTime": "2019-04-20T00:00:00+08:00"
     }
   ]
 }

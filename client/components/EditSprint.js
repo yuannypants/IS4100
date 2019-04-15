@@ -38,6 +38,8 @@ export default class EditSprint extends Component {
       sprintDescription: "",
       sprintStartDateTime: moment().format("L"),
       sprintDuration: "0",
+      sprintBaselineCost: "0",
+      sprintBaselineDuration: "0",
 
       dialogVisible: false,
 
@@ -83,6 +85,8 @@ export default class EditSprint extends Component {
             sprintsList: retrievedProject.sprints,
             currentSprintData: currentSprintData,
             tasksList: retrievedProject.sprints.filter(sprint => {return sprint.id === currentSprintId})[0].tasks,
+            sprintBaselineCost: retrievedProject.sprints.filter(sprint => {return sprint.id === currentSprintId})[0].tasks.reduce((cumulativeCost, task) => {return cumulativeCost + task.cost}, 0),
+            sprintBaselineDuration: retrievedProject.sprints.filter(sprint => {return sprint.id === currentSprintId})[0].tasks.reduce((cumulativeCost, task) => {return cumulativeCost + moment(task.endDateTime).diff(moment(task.startDateTime), "days")}, 0),
 
             sprintName: currentSprintData.name,
             sprintDescription: currentSprintData.description,
@@ -126,6 +130,8 @@ export default class EditSprint extends Component {
         console.log(err);
         this.setState({error: 'An error with the server was encountered.'})
       });
+
+
     } else {
       window.location = "Projects"
     }
@@ -136,8 +142,9 @@ export default class EditSprint extends Component {
       let expectedDuration = moment(task.endDateTime).diff(moment(task.startDateTime), "days");
       let resources = task.resources.map(resource => {
         return (
-          <div key={resource.id} style={{border:'0.5px solid black', padding:'2px 5px', margin: '0px 2px 4px 0px'}}>
-            <b>{ resource.nickname }</b> <br/>
+          <div key={resource.id} style={{border:'0.5px solid black', padding:'5px 8px', margin: '0px 2px 4px 0px'}}>
+            <span>Name: <b>{ resource.nickname }</b></span><br/>
+            <span>Hourly rate: { resource.wageRate }, Overtime rate: { resource.wageRate2 }</span>
             <ReactTags
               tags={resource.tags}
               delimiters={delimiters}
@@ -155,7 +162,9 @@ export default class EditSprint extends Component {
           </div>
           <div className="p-col-2">
             <b>Expected Duration</b> <br/>
-            { expectedDuration } Days
+            { expectedDuration } Days <br/>
+            Start: { moment(task.startDateTime).format("L") } <br/>
+            End: { moment(task.endDateTime).format("L") }
           </div>
           <div className="p-col-2">
             <b>Expected Costs</b> <br/>
@@ -185,58 +194,80 @@ export default class EditSprint extends Component {
     return (
       currentSprintData && (
         <div className="p-grid">
-          <div className="p-col-2">
-            <b>Sprint Name</b>
-          </div>
-          <div className="p-col-4">
-            <InputText style={{width: '100%'}} value={this.state.sprintName} onChange={(e) => this.setState({sprintName: e.target.value})} />
-          </div>
-          <div className="p-col-2">
-            <b>Sprint Description</b>
-          </div>
-          <div className="p-col-4">
-            <InputText style={{width: '100%'}} value={this.state.sprintDescription} onChange={(e) => this.setState({sprintDescription: e.target.value})} />
-          </div>
-          <div className="p-col-2">
-            <b>Start Date</b>
-          </div>
-          <div className="p-col-4">
-            <InputText style={{width: '100%'}} value={this.state.sprintStartDateTime} onChange={(e) => this.setState({sprintStartDateTime: e.target.value})} />
-          </div>
-          <div className="p-col-2">
-            <b>Duration (days)</b>
-          </div>
-          <div className="p-col-4">
-            <InputText style={{width: '100%'}} value={this.state.sprintDuration} onChange={(e) => this.setState({sprintDuration: e.target.value})} />
-          </div>
-
-          <div className="p-col-3" style={{ fontSize: '18px'}}>
-            <b> Expected Total Cost: </b> $
-            {
-              this.state.tasksList ?
-                this.state.tasksList.reduce((cumulativeCost, task) => {return cumulativeCost + task.cost}, 0) : 0
-            }
-          </div>
-
-          <div className="p-col-3">
-            <Button variant='info'>
-              View Suggested Budget &nbsp;
-            </Button>
+          <div className="p-col-6">
+            <div className="p-inputgroup">
+              <span className="p-inputgroup-addon" style={{width: '240px'}}>
+                Sprint Name
+              </span>
+              <InputText style={{width: '100%'}} value={this.state.sprintName} onChange={(e) => this.setState({sprintName: e.target.value})} />
+            </div>
           </div>
           <div className="p-col-6"> </div>
 
-          <div className="p-col-3" style={{ 'fontSize': '18px'}}>
-            <b> Expected Total Duration: </b>
-            {
-              this.state.tasksList &&
-              this.state.tasksList.reduce((cumulativeCost, task) => {return cumulativeCost + moment(task.endDateTime).diff(moment(task.startDateTime), "days")}, 0)
-            } Days
+          <div className="p-col-6">
+            <div className="p-inputgroup">
+              <span className="p-inputgroup-addon" style={{width: '240px'}}>
+                Sprint Description
+              </span>
+              <InputText style={{width: '100%'}} value={this.state.sprintDescription} onChange={(e) => this.setState({sprintDescription: e.target.value})} />
+            </div>
+          </div>
+          <div className="p-col-6"> </div>
+
+          <div className="p-col-6">
+            <div className="p-inputgroup">
+              <span className="p-inputgroup-addon" style={{width: '240px'}}>
+                Duration (days)
+              </span>
+              <InputText style={{width: '100%'}} value={this.state.sprintDuration} onChange={(e) => this.setState({sprintDuration: e.target.value})} />
+            </div>
+          </div>
+          <div className="p-col-6"> </div>
+
+          <div className="p-col-6">
+            <div className="p-inputgroup">
+              <span className="p-inputgroup-addon">
+                <div style={{width: '153px'}}>Start Date</div>
+              </span>
+              <DateTime style={{width: '240px'}} value={this.state.sprintStartDateTime} onChange={moment => this.setState({sprintStartDateTime: moment.format("L")})} />
+            </div>
+          </div>
+          <div className="p-col-6"> </div>
+
+          <div className="p-col-6">
+            <div className="p-inputgroup">
+              <span className="p-inputgroup-addon" style={{width: '240px'}}>
+                Baseline Cost
+              </span>
+              <InputText style={{width: '100%'}} value={this.state.sprintBaselineCost} onChange={(e) => this.setState({sprintBaselineCost: e.target.value})} />
+            </div>
+          </div>
+          <div className="p-col-4">
+            <Button variant='info' style={{width: '100%'}} onClick={() => {
+              this.state.tasksList.length > 0 ? alert("Based on the work tags detected in the tasks, the industry average budget for this task is $420.") : alert("No tasks/tags to derive data from.")
+            }}>
+              View Industry Standard Baseline Cost &nbsp;
+            </Button>
+          </div>
+          <div className="p-col-2">
           </div>
 
-          <div className="p-col-3">
-            <Button variant='info'>
-              View Suggested Duration
+          <div className="p-col-6">
+            <div className="p-inputgroup">
+              <span className="p-inputgroup-addon" style={{width: '240px'}}>
+                Baseline Duration
+              </span>
+              <InputText style={{width: '100%'}} value={this.state.sprintBaselineDuration} onChange={(e) => this.setState({sprintBaselineDuration: e.target.value})} />
+            </div>
+          </div>
+          <div className="p-col-4">
+            <Button variant='info' style={{width: '100%'}} onClick={() => {
+              this.state.tasksList.length > 0 ? alert("Based on the work tags detected in the tasks, the industry average sprint time is 5 days.") : alert("No tasks/tags to derive data from.")
+            }}>
+              View Industry Standard Baseline Duration
             </Button>
+          </div>
+          <div className="p-col-2">
           </div>
         </div>
       )
@@ -362,7 +393,8 @@ export default class EditSprint extends Component {
       httpUPDATE('http://localhost:3001/projects/' + currentProjectId, newProjectData)
       .then(response => {
         console.log(response.data);
-        this.setState({tasksList: newTasksList, currentSprintData: newSprintData, currentProjectData: newProjectData})
+        this.setState({tasksList: newTasksList, currentSprintData: newSprintData, currentProjectData: newProjectData, dialogVisible: false})
+        alert("The task has been successfully created.")
       })
        .catch(err => {
         console.log(err);
@@ -425,6 +457,9 @@ export default class EditSprint extends Component {
         <p>
           <b>Hourly Rate:</b> ${user.wageRate}.00
         </p>
+        <p>
+          <b>Overtime Rate:</b> ${user.wageRate2}.00
+        </p>
         <ReactTags
           tags={user.tags}
           delimiters={delimiters}
@@ -449,12 +484,10 @@ export default class EditSprint extends Component {
               {
                 this.generateSprintDetails()
               }
-              <div className="p-col-1 p-offset-10">
+              <div className="p-col-3" style={{width: '100%'}}>
                 <Button onClick={() => this.onClickAddNewTask()} style={{marginRight: '5px'}}>
                   <FontAwesomeIcon icon={fa.faPlus} /> &nbsp;New Task
                 </Button>
-              </div>
-              <div className="p-col-1">
                 <Button onClick={() => this.onClickEditSprint()} variant='info' style={{marginRight: '5px'}}>
                   Update Sprint
                 </Button>
@@ -517,8 +550,8 @@ export default class EditSprint extends Component {
                 source={this.state.srcUsersList}
                 target={this.state.dstUsersList}
                 itemTemplate={this.usersTemplate}
-                sourceHeader="Available Resources"
-                targetHeader="Selected Resources"
+                sourceHeader="Available Personnel"
+                targetHeader="Selected Personnel"
                 responsive={true}
                 sourceStyle={{height: '250px'}}
                 targetStyle={{height: '250px'}}

@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import Helmet from 'react-helmet';
 import { httpGET } from '../utils/httpUtils';
-import Calendar from './Calendar'
-import moment from './Sprints'
+import Calendar from './Calendar';
+import moment from 'moment';
+
+const ls = window.localStorage;
 
 export default class Developer extends Component {
   constructor(props) {
@@ -14,7 +16,8 @@ export default class Developer extends Component {
   }
 
   componentWillMount () {
-    httpGET('http://localhost:3001/calendar')
+    let userData = JSON.parse(ls.getItem('userData'));
+    httpGET('http://localhost:3001/calendar?userId=' + userData.id)
     .then(response => {
       console.log(response.data);
       let calendarEvents = response.data;
@@ -27,7 +30,7 @@ export default class Developer extends Component {
           end: moment(event.endDateTime).toDate()
         });
       }
-      this.setState({events: events})
+      this.setState({events: events});
     })
     .catch(err => {
       console.log(err);

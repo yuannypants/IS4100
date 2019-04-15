@@ -13,6 +13,7 @@ export default class Register extends Component {
       username: '',
       nickname: '',
       password: '',
+      adminpw: '',
       error: null
     }
 
@@ -20,25 +21,28 @@ export default class Register extends Component {
   }
 
   onClickSubmit() {
-    let data = {
-      username: this.state.username,
-      nickname: this.state.username,
-      password: this.state.password,
-      type: "developer",
-      wageRate: 80,
-      tags: ""
-    }
+    if (this.state.adminpw==='admin') {
+      let data = {
+        username: this.state.username,
+        nickname: this.state.username,
+        password: this.state.password,
+        type: "developer",
+        wageRate: 10,wageRate2: 15,
+        tags: []
+      }
 
-    httpPOST('http://localhost:3001/users', data)
-    .then(response => {
-      alert(JSON.stringify(response.data,null,2));
-      alert('Your account has been successfully registered!');
-      window.location.href = '/Login'; // Redirects to main page
-    })
-    .catch(error => {
-      let errorMsg = 'An error was encountered.';
-      this.setState({error: errorMsg})
-    });
+      httpPOST('http://localhost:3001/users', data)
+      .then(response => {
+        alert('Your account has been successfully registered!');
+        window.location.href = '/Login'; // Redirects to main page
+      })
+      .catch(error => {
+        let errorMsg = 'An error was encountered.';
+        this.setState({error: errorMsg})
+      });
+    } else {
+      alert("You have entered an incorrect administrative password.");
+    }
   }
 
   render() {
@@ -69,6 +73,13 @@ export default class Register extends Component {
                   <Password id="passwordInput" value={this.state.password} onChange={e => this.setState({password: e.target.value})}
                     feedback={false}/>
                   <label htmlFor="passwordInput">Password</label>
+                </span>
+              </div>
+              <div className="p-col-10" style={{marginTop:'15px'}}>
+                <span className="p-float-label">
+                  <Password id="passwordInput" value={this.state.adminpw} onChange={e => this.setState({adminpw: e.target.value})}
+                    feedback={false}/>
+                  <label htmlFor="passwordInput">Enter administrative password</label>
                 </span>
               </div>
               <div className="p-col-10">

@@ -28,6 +28,7 @@ export default class Settings extends Component {
     this.state = {
     	username: '',
 			wageRate: '0',
+			wageRate2: '0',
 			skills: '',
 			password: '',
 			tags: [],
@@ -99,6 +100,7 @@ export default class Settings extends Component {
 			this.setState({
 				username: userData.username,
 				wageRate: userData.wageRate,
+				wageRate2: userData.wageRate2,
 				tags: userData.tags
 			})
 		} else {
@@ -136,6 +138,14 @@ export default class Settings extends Component {
 							<div className="p-col-6"></div>
 
 							<div className="p-col-2">
+								<span><b>Overtime Wage Rate ($/h): </b></span>
+							</div>
+							<div className="p-col-4">
+								<InputText style={{width: '100%'}} value={this.state.wageRate2} onChange={(e) => this.setState({wageRate2: e.target.value})}/>
+							</div>
+							<div className="p-col-6"></div>
+
+							<div className="p-col-2">
 								<span><b>Skills: </b></span>
 							</div>
 							<div className="p-col-4">
@@ -155,10 +165,11 @@ export default class Settings extends Component {
 							<div className="p-col-4">
 								<Password style={{width: '100%'}} value={this.state.password} onChange={(e) => this.setState({password: e.target.value})} feedback={false}/>
 							</div>
+							<div className="p-col-6"> </div>
 							<div className="p-col-2">
-								<Button onClick={() => this.onClickMakeChanges()}>Make changes</Button>
+								<Button onClick={() => this.onClickMakeChanges()}>Save Changes</Button>
 							</div>
-							<div className="p-col-6"></div>
+							<div className="p-col-10"> </div>
 						</div>
           </div>
         </div>
