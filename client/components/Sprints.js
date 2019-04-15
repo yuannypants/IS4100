@@ -1,13 +1,13 @@
-import { Dialog } from 'primereact/dialog'
-import { InputText } from 'primereact/inputtext'
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import { Button } from 'react-bootstrap';
 import Helmet from 'react-helmet';
-import Bootstrap from 'bootstrap/dist/css/bootstrap.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import * as fa from "@fortawesome/free-solid-svg-icons";
-import {Row, Col, Button, Container} from 'react-bootstrap';
-import { httpGET, httpPOST, httpUPDATE } from '../utils/httpUtils'
+import { httpGET, httpUPDATE } from '../utils/httpUtils';
 import moment from 'moment';
+import { Dialog } from 'primereact/dialog';
+import { InputText } from 'primereact/inputtext';
+import * as fa from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Calendar from './Calendar';
 
 const ls = window.localStorage;
 
@@ -47,6 +47,26 @@ export default class Sprints extends Component {
         console.log(err);
         this.setState({error: 'An error with the server was encountered.'})
       });
+
+      httpGET('http://localhost:3001/calendar')
+      .then(response => {
+        console.log(response.data);
+        let calendarEvents = response.data;
+        let events = [];
+
+        for (let event of calendarEvents) {
+          events.push({
+            title: event.projectName + ": " + event.sprintName + " - " + event.taskName + " (" + event.username + ")",
+            start: moment(event.startDateTime).toDate(),
+            end: moment(event.endDateTime).toDate()
+          });
+        }
+        this.setState({events: events})
+      })
+       .catch(err => {
+        console.log(err);
+        this.setState({error: 'An error with the server was encountered.'})
+      });
     } else {
       window.location = "Projects"
     }
@@ -70,10 +90,10 @@ export default class Sprints extends Component {
               ${ sprint.cost }
             </div>
             <div className="p-col-2" >
-              <Button onClick={() => this.onClickEditSprint(sprint.id, sprint.name)} variant='warning' style={{marginRight: '5px'}}>
+              <Button onClick={() => this.onClickEditSprint(sprint.id, sprint.name)} variant='warning' style={{height: '40px', width: '40px', margin: '0px 5px 5px 0px'}}>
                 <FontAwesomeIcon icon={fa.faEdit} />
               </Button>
-              <Button onClick={() => this.onClickDeleteSprint(sprint.id)} variant='danger' style={{marginRight: '5px'}}>
+              <Button onClick={() => this.onClickDeleteSprint(sprint.id)} variant='danger' style={{height: '40px', width: '40px', margin: '0px 5px 5px 0px'}}>
                 <FontAwesomeIcon icon={fa.faTrash} />
               </Button>
             </div>
@@ -148,7 +168,6 @@ export default class Sprints extends Component {
     }
   }
 
-  // Displays the HTML to the user
   render() {
     return (
       <div className="p-grid">
@@ -156,22 +175,22 @@ export default class Sprints extends Component {
           <title>Sprints</title>
           <meta name="description" content="Sprints" />
         </Helmet>
-        <div className="p-col-10 p-offset-1">
+        <div className="p-col-12">
           <div className="card card-w-title">
             <h1 style={{ textAlign : 'center'}}>Sprints{ " for " + ls.getItem("currentProjectName")}</h1>
             <div className="p-grid">
               <div className="p-col-3">
-                <Button onClick={() => this.setState({dialogVisible: true})} style={{width: '100%'}}>
-                  <FontAwesomeIcon icon={fa.faPlus} /> &nbsp;New Sprint
+                <Button onClick={() => this.setState({dialogVisible: true})} style={{width: '100%', minWidth: '180px'}}>
+                  New Sprint
                 </Button>
               </div>
               <div className="p-col-3">
-                <Button onClick={() => this.onClickViewIndustryStatistics()} variant='info' style={{width: '100%'}}>
-                  <FontAwesomeIcon icon={fa.faPlus} /> &nbsp;Industry Statistics
+                <Button onClick={() => this.onClickViewIndustryStatistics()} variant='info' style={{width: '100%', minWidth: '180px'}}>
+                  Get Industrial Statistics
                 </Button>
               </div>
               <div className="p-col-3 p-offset-3">
-                  <b>Total Cost:</b> $
+                  <b>Total Expected Costs:</b> $
                   {
                     this.state.sprintsList &&
                       this.state.sprintsList.reduce((cumulativeCost, sprint) => { return cumulativeCost + sprint.cost }, 0)
@@ -180,11 +199,16 @@ export default class Sprints extends Component {
               <div className="p-col-12"><hr/></div>
               <div className="p-col-12">
               {
-                // TODO
                 this.state.sprintsList && this.generateSprintsView()
               }
               </div>
             </div>
+          </div>
+        </div>
+        <div className="p-col-12">
+          <div className="card card-w-title" style={{height: window.innerHeight}}>
+            <h1 style={{ textAlign : 'center'}}>Sprints Calendar{ " for " + ls.getItem("currentProjectName")}</h1>
+            <Calendar events={this.state.events}/>
           </div>
         </div>
         <Dialog header="Add New Sprint" visible={this.state.dialogVisible} modal={true} onHide={(e) => this.setState({dialogVisible: false})}>

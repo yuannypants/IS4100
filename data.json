@@ -3,7 +3,7 @@
     {
       "id": 1,
       "username": "boss",
-      "nickname": "John Smith",
+      "nickname": "Jungpil",
       "password": "password",
       "userType": "manager",
       "wageRate": 15,
@@ -12,7 +12,7 @@
         { "id": "Java", "text": "Java" },
         { "id": "SQL", "text": "SQL" },
         { "id": "English", "text": "English" },
-        { "id": "Malay", "text": "Malay" }
+        { "id": "Project Management", "text": "Project Management" }
       ]
     },
     {
@@ -95,21 +95,21 @@
     {
       "name": "Data Analytics Project",
       "description": "Developed with Python and SQL",
-      "startDateTime": "2019-02-04T00:00:00+08:00",
-      "endDateTime": "2019-02-23T00:00:00+08:00",
+      "startDateTime": "2019-03-04T00:00:00+08:00",
+      "endDateTime": "2019-04-06T00:00:00+08:00",
       "sprints": [
         {
           "name": "Sprint #1",
           "description": "System release #1",
-          "startDateTime": "2019-02-04T00:00:00+08:00",
-          "endDateTime": "2019-02-09T00:00:00+08:00",
+          "startDateTime": "2019-03-04T00:00:00+08:00",
+          "endDateTime": "2019-03-09T00:00:00+08:00",
           "cost": 400,
           "tasks": [
             {
               "name": "Task #1",
               "description": "Coding backend",
-              "startDateTime": "2019-02-04T00:00:00+08:00",
-              "endDateTime": "2019-02-09T00:00:00+08:00",
+              "startDateTime": "2019-03-04T00:00:00+08:00",
+              "endDateTime": "2019-03-09T00:00:00+08:00",
               "cost": 400,
               "tags": [{ "id": "Python", "text": "Python" }, { "id": "SQL", "text": "SQL" }],
               "resources": [
@@ -137,15 +137,15 @@
         {
           "name": "Sprint #2",
           "description": "System release #2",
-          "startDateTime": "2019-02-11T00:00:00+08:00",
-          "endDateTime": "2019-02-16T00:00:00+08:00",
+          "startDateTime": "2019-03-18T00:00:00+08:00",
+          "endDateTime": "2019-03-23T00:00:00+08:00",
           "cost": 400,
           "tasks": [
             {
               "name": "Task #1",
               "description": "Coding frontend",
-              "startDateTime": "2019-02-11T00:00:00+08:00",
-              "endDateTime": "2019-02-16T00:00:00+08:00",
+              "startDateTime": "2019-03-18T00:00:00+08:00",
+              "endDateTime": "2019-03-23T00:00:00+08:00",
               "cost": 400,
               "tags": [{ "id": "Python", "text": "Python" }, { "id": "SQL", "text": "SQL" }],
               "resources": [
@@ -173,15 +173,15 @@
         {
           "name": "Sprint #3",
           "description": "Final system release",
-          "startDateTime": "2019-02-18T00:00:00+08:00",
-          "endDateTime": "2019-02-23T00:00:00+08:00",
+          "startDateTime": "2019-04-01T00:00:00+08:00",
+          "endDateTime": "2019-04-06T00:00:00+08:00",
           "cost": 400,
           "tasks": [
             {
               "name": "Task #1",
               "description": "Integrating backend and frontend",
-              "startDateTime": "2019-02-18T00:00:00+08:00",
-              "endDateTime": "2019-02-23T00:00:00+08:00",
+              "startDateTime": "2019-04-01T00:00:00+08:00",
+              "endDateTime": "2019-04-06T00:00:00+08:00",
               "cost": 400,
               "tags": [{ "id": "Python", "text": "Python" }, { "id": "SQL", "text": "SQL" }],
               "resources": [
@@ -212,21 +212,21 @@
     {
       "name": "Enterprise Solutions for NUS Project",
       "description": "Developed with Java EE and SQL",
-      "startDateTime": "2019-02-25T00:00:00+08:00",
-      "endDateTime": "2019-03-16T00:00:00+08:00",
+      "startDateTime": "2019-03-11T00:00:00+08:00",
+      "endDateTime": "2019-04-20T00:00:00+08:00",
       "sprints": [
         {
           "name": "Sprint #1",
           "description": "System release #1",
-          "startDateTime": "2019-02-25T00:00:00+08:00",
-          "endDateTime": "2019-03-02T00:00:00+08:00",
+          "startDateTime": "2019-03-11T00:00:00+08:00",
+          "endDateTime": "2019-03-16T00:00:00+08:00",
           "cost": 400,
           "tasks": [
             {
               "name": "Task #1",
               "description": "Coding backend",
-              "startDateTime": "2019-02-25T00:00:00+08:00",
-              "endDateTime": "2019-03-02T00:00:00+08:00",
+              "startDateTime": "2019-03-11T00:00:00+08:00",
+              "endDateTime": "2019-03-16T00:00:00+08:00",
               "cost": 400,
               "tags": [{ "id": "Java", "text": "Java" }, { "id": "SQL", "text": "SQL" }],
               "resources": [
@@ -254,15 +254,15 @@
         {
           "name": "Sprint #2",
           "description": "System release #2",
-          "startDateTime": "2019-03-04T00:00:00+08:00",
-          "endDateTime": "2019-03-09T00:00:00+08:00",
+          "startDateTime": "2019-03-25T00:00:00+08:00",
+          "endDateTime": "2019-03-30T00:00:00+08:00",
           "cost": 400,
           "tasks": [
             {
               "name": "Task #1",
               "description": "Coding frontend",
-              "startDateTime": "2019-03-04T00:00:00+08:00",
-              "endDateTime": "2019-03-09T00:00:00+08:00",
+              "startDateTime": "2019-25-30T00:00:00+08:00",
+              "endDateTime": "2019-25-30T00:00:00+08:00",
               "cost": 400,
               "tags": [{ "id": "Java", "text": "Java" }, { "id": "SQL", "text": "SQL" }],
               "resources": [
@@ -290,15 +290,15 @@
         {
           "name": "Sprint #3",
           "description": "Final system release",
-          "startDateTime": "2019-03-11T00:00:00+08:00",
-          "endDateTime": "2019-03-16T00:00:00+08:00",
+          "startDateTime": "2019-04-15T00:00:00+08:00",
+          "endDateTime": "2019-04-20T00:00:00+08:00",
           "cost": 400,
           "tasks": [
             {
               "name": "Task #1",
               "description": "Integrating backend and frontend",
-              "startDateTime": "2019-03-11T00:00:00+08:00",
-              "endDateTime": "2019-03-16T00:00:00+08:00",
+              "startDateTime": "2019-04-15T00:00:00+08:00",
+              "endDateTime": "2019-04-20T00:00:00+08:00",
               "cost": 400,
               "tags": [{ "id": "Java", "text": "Java" }, { "id": "SQL", "text": "SQL" }],
               "resources": [
@@ -325,6 +325,80 @@
         }
       ],
       "id": 2
+    }
+  ],
+  "calendar": [
+    {
+      "userId": 6,
+      "username": "Zhang Yuanhao",
+      "projectId": 1,
+      "projectName": "Data Analytics Project",
+      "sprintId": 1,
+      "sprintName": "Sprint #1",
+      "taskId": 1,
+      "taskName": "Task #1",
+      "startDateTime":"2019-03-04T00:00:00+08:00",
+      "endDateTime":"2019-03-09T00:00:00+08:00"
+    },
+    {
+      "userId": 6,
+      "username": "Zhang Yuanhao",
+      "projectId": 1,
+      "projectName": "Data Analytics Project",
+      "sprintId": 2,
+      "sprintName": "Sprint #2",
+      "taskId": 1,
+      "taskName": "Task #1",
+      "startDateTime":"2019-03-18T00:00:00+08:00",
+      "endDateTime":"2019-03-23T00:00:00+08:00"
+    },
+    {
+      "userId": 6,
+      "username": "Zhang Yuanhao",
+      "projectId": 1,
+      "projectName": "Data Analytics Project",
+      "sprintId": 3,
+      "sprintName": "Sprint #3",
+      "taskId": 1,
+      "taskName": "Task #1",
+      "startDateTime":"2019-04-01T00:00:00+08:00",
+      "endDateTime":"2019-04-06T00:00:00+08:00"
+    },
+    {
+      "userId": 6,
+      "username": "Zhang Yuanhao",
+      "projectId": 2,
+      "projectName": "Enterprise Solutions for NUS Project",
+      "sprintId": 1,
+      "sprintName": "Sprint #1",
+      "taskId": 1,
+      "taskName": "Task #1",
+      "startDateTime":"2019-03-11T00:00:00+08:00",
+      "endDateTime":"2019-03-16T00:00:00+08:00"
+    },
+    {
+      "userId": 6,
+      "username": "Zhang Yuanhao",
+      "projectId": 2,
+      "projectName": "Enterprise Solutions for NUS Project",
+      "sprintId": 2,
+      "sprintName": "Sprint #2",
+      "taskId": 1,
+      "taskName": "Task #1",
+      "startDateTime":"2019-03-25T00:00:00+08:00",
+      "endDateTime":"2019-03-30T00:00:00+08:00"
+    },
+    {
+      "userId": 6,
+      "username": "Zhang Yuanhao",
+      "projectId": 2,
+      "projectName": "Enterprise Solutions for NUS Project",
+      "sprintId": 3,
+      "sprintName": "Sprint #3",
+      "taskId": 1,
+      "taskName": "Task #1",
+      "startDateTime":"2019-04-15T00:00:00+08:00",
+      "endDateTime":"2019-04-20T00:00:00+08:00"
     }
   ]
 }

@@ -10,6 +10,7 @@ import {Row, Col, Button, Container, InputGroup, FormControl } from 'react-boots
 import { WithContext as ReactTags } from 'react-tag-input'
 import { httpGET, httpPOST, httpUPDATE } from '../utils/httpUtils'
 import moment from 'moment';
+import Calendar from './Calendar'
 
 const ls = window.localStorage;
 
@@ -29,6 +30,8 @@ export default class EditSprint extends Component {
       sprintsList: [],
       currentSprintData: {},
       tasksList: [],
+
+      events: [],
 
       sprintName: "",
       sprintDescription: "",
@@ -80,7 +83,6 @@ export default class EditSprint extends Component {
             currentSprintData: currentSprintData,
             tasksList: retrievedProject.sprints.filter(sprint => {return sprint.id === currentSprintId})[0].tasks,
 
-
             sprintName: currentSprintData.name,
             sprintDescription: currentSprintData.description,
             sprintStartDateTime: moment(currentSprintData.startDateTime).format("L"),
@@ -103,6 +105,26 @@ export default class EditSprint extends Component {
         console.log(err);
         this.setState({error: 'An error with the server was encountered.'})
       });
+
+      httpGET('http://localhost:3001/calendar')
+      .then(response => {
+        console.log(response.data);
+        let calendarEvents = response.data;
+        let events = [];
+
+        for (let event of calendarEvents) {
+          events.push({
+            title: event.projectName + ": " + event.sprintName + " - " + event.taskName + " (" + event.username + ")",
+            start: moment(event.startDateTime).toDate(),
+            end: moment(event.endDateTime).toDate()
+          });
+        }
+        this.setState({events: events})
+      })
+      .catch(err => {
+        console.log(err);
+        this.setState({error: 'An error with the server was encountered.'})
+      });
     } else {
       window.location = "Projects"
     }
@@ -111,27 +133,43 @@ export default class EditSprint extends Component {
   generateTasksView() {
     return this.state.tasksList.map(task => {
       let expectedDuration = moment(task.endDateTime).diff(moment(task.startDateTime), "days");
+      let resources = task.resources.map(resource => {
+        return (
+          <div key={resource.id} style={{border:'0.5px solid black', padding:'2px 5px', margin: '0px 2px 4px 0px'}}>
+            <b>{ resource.nickname }</b> <br/>
+            <ReactTags
+              tags={resource.tags}
+              delimiters={delimiters}
+              readOnly={true} />
+          </div>
+        )
+      })
+
       return (
         <div className="p-grid" key={task.id}>
           <hr/>
-          <div className="p-col-4">
+          <div className="p-col-2">
             <b>{ task.name } </b> <br/>
             <i>{ task.description }</i>
           </div>
-          <div className="p-col-3">
+          <div className="p-col-2">
             <b>Expected Duration</b> <br/>
             { expectedDuration } Days
           </div>
-          <div className="p-col-3">
+          <div className="p-col-2">
             <b>Expected Costs</b> <br/>
             $ { task.cost }
           </div>
+          <div className="p-col-4">
+            <b>Allocated resources</b> <br/>
+            { resources }
+          </div>
           <div className="p-col-2">
-            <Button onClick={() => this.onClickEditTask(task.id)} variant='warning' style={{marginRight: '5px'}}>
+            <Button onClick={() => this.onClickEditTask(task.id)} variant='warning' style={{height: '40px', width: '40px', margin: '0px 5px 5px 0px'}}>
               <FontAwesomeIcon icon={fa.faEdit} />
             </Button>
 
-            <Button onClick={(e) => this.onClickDeleteTask(task.id)} variant='danger' style={{marginRight: '5px'}}>
+            <Button onClick={(e) => this.onClickDeleteTask(task.id)} variant='danger' style={{height: '40px', width: '40px', margin: '0px 5px 5px 0px'}}>
                <FontAwesomeIcon icon={fa.faTrash} />
             </Button>
           </div>
@@ -291,6 +329,9 @@ export default class EditSprint extends Component {
   onClickSaveTask() {
     if (confirm("Confirm to save task?")) {
       let currentProjectId = ls.getItem("currentProjectId");
+      let currentProjectName = ls.getItem("currentProjectName");
+      let currentSprintId = ls.getItem("currentSprintId");
+      let currentSprintName = ls.getItem("currentSprintName");
       let newTasksList = this.state.tasksList;
 
       if (this.state.taskId) { // Save
@@ -326,6 +367,44 @@ export default class EditSprint extends Component {
         console.log(err);
         this.setState({error: 'An error with the server was encountered.'})
       });
+
+      let eventIdStart = this.state.events.length;
+
+      for (let user of this.state.dstUsersList) {
+        eventIdStart++;
+        let newEvent = {
+          id: eventIdStart,
+          userId: user.id,
+          username: user.nickname,
+          projectId: currentProjectId,
+          projectName: currentProjectName,
+          sprintId: currentSprintId,
+          sprintName: currentSprintName,
+          taskId: this.state.tasksList.length + 1,
+          taskName: this.state.taskName,
+          startDateTime: moment(this.state.taskStartDateTime).startOf('day').format(),
+          endDateTime: moment(this.state.taskStartDateTime).add(parseInt(this.state.taskDuration,10),'days').format()
+        }
+
+        let newCalendarEvent = this.state.events;
+        newCalendarEvent.push({
+          title: currentProjectName + ": " + currentSprintName + " - " + this.state.taskName + " (" + user.nickname + ")",
+          start: moment(this.state.taskStartDateTime).startOf('day').toDate(),
+          end: moment(this.state.taskStartDateTime).add(parseInt(this.state.taskDuration,10),'days').toDate()
+        });
+
+        this.setState({events: newCalendarEvent});
+
+        httpPOST('http://localhost:3001/calendar', newEvent)
+        .then(response2 => {
+          console.log(response2.data);
+          this.setState({tasksList: newTasksList, currentSprintData: newSprintData, currentProjectData: newProjectData})
+        })
+         .catch(err => {
+          console.log(err);
+          this.setState({error: 'An error with the server was encountered.'})
+        });
+      }
     }
   }
 
@@ -338,7 +417,7 @@ export default class EditSprint extends Component {
 
   usersTemplate(user) {
     return (
-      <div className="p-clearfix" style={{fontSize: '14px',margin: '2px 5px 0 0'}}>
+      <div className="p-clearfix" style={{fontSize: '13px',margin: '2px 5px 0 0'}}>
         <p>
           <b>Name:</b> {user.nickname}
         </p>
@@ -389,9 +468,20 @@ export default class EditSprint extends Component {
           </div>
         </div>
 
-        <Dialog header="Edit Task" visible={this.state.dialogVisible} modal={true} onHide={(e) => this.setState({dialogVisible: false})}>
-          <div className="p-grid">
+        <div className="p-col-10 p-offset-1">
+          <div className="card card-w-title" style={{height: window.innerHeight}}>
+            <Calendar events={this.state.events}/>
+          </div>
+        </div>
 
+        <Dialog
+          header="Edit Task"
+          visible={this.state.dialogVisible}
+          modal={true}
+          onHide={(e) => this.setState({dialogVisible: false})}
+          style={{width: window.innerWidth * 0.8}}
+        >
+          <div className="p-grid">
             <div className="p-col-4">
               <b>Task Name</b>
             </div>
@@ -428,8 +518,8 @@ export default class EditSprint extends Component {
                 sourceHeader="Available Resources"
                 targetHeader="Selected Resources"
                 responsive={true}
-                sourceStyle={{height: '300px'}}
-                targetStyle={{height: '300px'}}
+                sourceStyle={{height: '250px'}}
+                targetStyle={{height: '250px'}}
                 onChange={this.onPickListChange}>
 
               </PickList>
