@@ -1,6 +1,6 @@
 # IS4100
 ## System Pre-requisites
-1.  Node.js (latest version recommended)
+1.  [Node.js](https://nodejs.org/en/) (latest version recommended!)
 
 ## Deployment Instructions
 1.  Clone this repository into a directory of your choice
